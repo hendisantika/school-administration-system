@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.entity;
 
+import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

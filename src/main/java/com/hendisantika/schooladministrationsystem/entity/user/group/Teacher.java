@@ -1,6 +1,7 @@
-package com.hendisantika.schooladministrationsystem.entity;
+package com.hendisantika.schooladministrationsystem.entity.user.group;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hendisantika.schooladministrationsystem.entity.Course;
 import com.hendisantika.schooladministrationsystem.entity.user.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
