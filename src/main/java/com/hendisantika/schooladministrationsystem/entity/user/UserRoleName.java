@@ -1,4 +1,4 @@
-package com.hendisantika.schooladministrationsystem.entity;
+package com.hendisantika.schooladministrationsystem.entity.user;
 
 /**
  * Created by IntelliJ IDEA.

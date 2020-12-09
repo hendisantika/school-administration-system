@@ -2,6 +2,7 @@ package com.hendisantika.schooladministrationsystem.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.hendisantika.schooladministrationsystem.entity.user.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
