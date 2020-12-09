@@ -11,13 +11,19 @@ import lombok.NoArgsConstructor;
  * Email: hendisantika@gmail.com
  * Telegram : @hendisantika34
  * Date: 10/12/20
- * Time: 05.42
+ * Time: 05.43
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RemarkResponseDTO {
-    private String text;
+public class ReportResponseDTO {
+    private int year;
+
+    private int semester;
+
+    private int mark;
 
     private Long studentId;
+
+    private Long courseId;
 }
