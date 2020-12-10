@@ -1,6 +1,8 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.dto.response.ClassroomResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Classroom;
+import com.hendisantika.schooladministrationsystem.entity.user.group.Teacher;
 import com.hendisantika.schooladministrationsystem.repository.ClassroomRepository;
 import com.hendisantika.schooladministrationsystem.repository.CourseRepository;
 import com.hendisantika.schooladministrationsystem.repository.user.StudentRepository;
@@ -67,4 +69,27 @@ public class ClassroomService {
                 .findAny()
                 .orElse(null);
     }
+
+    /**
+     * Creates a new classroom and save into the database.
+     *
+     * @param classroomResponseDTO Submitted DTO from web application.
+     * @return a new Classroom object.
+     * @see Classroom
+     */
+    public Classroom create(ClassroomResponseDTO classroomResponseDTO) {
+        /* Finds teacher by id. */
+        Teacher teacher = teacherRepository.getOne(classroomResponseDTO.getHeadTeacherId());
+        Classroom classroom = new Classroom(
+                classroomResponseDTO.getStartYear(),
+                classroomResponseDTO.getEndYear(),
+                classroomResponseDTO.getYear(),
+                classroomResponseDTO.getLetter(),
+                teacher
+        ); // Creates a new classroom.
+        /* sets back a teacher role from ROLE_TEACHER to ROLE_HEADTEACHER. */
+        classroomRepository.setHeadteacherFromTeacher(teacherRepository.GetUserIdByTeacherId(teacher.getId()));
+        return classroomRepository.save(classroom);
+    }
+
 }
