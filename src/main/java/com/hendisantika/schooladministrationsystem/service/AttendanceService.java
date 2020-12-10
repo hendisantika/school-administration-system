@@ -78,4 +78,15 @@ public class AttendanceService {
         Attendance attendance = attendanceRepository.getOne(id);
         attendanceRepository.delete(attendance);
     }
+
+    /**
+     * Verifies a missed lecture by id.
+     *
+     * @param id Id of the Attendance.
+     */
+    public void verify(Long id) {
+        Attendance attendance = attendanceRepository.getOne(id);
+        attendance.setVerified(true);
+        attendanceRepository.save(attendance);
+    }
 }
