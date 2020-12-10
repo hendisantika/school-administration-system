@@ -68,4 +68,14 @@ public class AttendanceService {
         }
         return result;
     }
+
+    /**
+     * Deletes an attendances by id.
+     *
+     * @param id Id of the Attendance.
+     */
+    public void delete(Long id) {
+        Attendance attendance = attendanceRepository.getOne(id);
+        attendanceRepository.delete(attendance);
+    }
 }
