@@ -53,4 +53,18 @@ public class ClassroomService {
         return classroomRepository.findById(id).orElse(null);
     }
 
+    /**
+     * Returns a Classroom object by Headteacher Id if classroom exist
+     * or returns a null value.
+     *
+     * @param id Id of the headteacher
+     * @return a classroom object by headteacher id.
+     */
+    public Classroom findByHeadteacher(Long id) {
+        return classroomRepository.findAll()
+                .stream()
+                .filter(classroom -> classroom.getHeadTeacher().getId().equals(id))
+                .findAny()
+                .orElse(null);
+    }
 }
