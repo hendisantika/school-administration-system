@@ -1,6 +1,8 @@
 package com.hendisantika.schooladministrationsystem.service;
 
 import com.hendisantika.schooladministrationsystem.entity.Classroom;
+import com.hendisantika.schooladministrationsystem.entity.archive.Archive;
+import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.repository.AttendanceRepository;
 import com.hendisantika.schooladministrationsystem.repository.ClassroomRepository;
 import com.hendisantika.schooladministrationsystem.repository.ExamRepository;
@@ -69,4 +71,19 @@ public class AdminService {
             classroomRepository.save(classroom);
         }
     }
+
+    /**
+     * Creates an archive file, that contains all student reports.
+     */
+    public String createArchive() {
+        for (Student student : studentRepository.findAll()) {
+            saveReportsByStudent(student.getId(), new Archive(
+                    student.getStudent().getUsername(),
+                    student.getStudent().getFullName(),
+                    student.getDateOfBirth()
+            ));
+        }
+        return "Archived";
+    }
+
 }
