@@ -41,4 +41,16 @@ public class ClassroomService {
         return classroomRepository.findAll();
     }
 
+    /**
+     * Returns a Classroom object by id, if classroom exist
+     * or returns a null value.
+     *
+     * @param id Id of the classroom.
+     * @return a classroom object by id.
+     * @see Classroom
+     */
+    public Classroom findById(Long id) {
+        return classroomRepository.findById(id).orElse(null);
+    }
+
 }
