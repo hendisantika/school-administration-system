@@ -1,11 +1,14 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.entity.Classroom;
 import com.hendisantika.schooladministrationsystem.repository.ClassroomRepository;
 import com.hendisantika.schooladministrationsystem.repository.CourseRepository;
 import com.hendisantika.schooladministrationsystem.repository.user.StudentRepository;
 import com.hendisantika.schooladministrationsystem.repository.user.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -28,5 +31,14 @@ public class ClassroomService {
     private CourseRepository courseRepository;
     @Autowired
     private AuthorityService authService;
+
+    /**
+     * Returns a List of Classroom.
+     *
+     * @return classrooms from database.
+     */
+    public List<Classroom> findAll() {
+        return classroomRepository.findAll();
+    }
 
 }
