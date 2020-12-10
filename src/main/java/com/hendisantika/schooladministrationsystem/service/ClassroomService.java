@@ -2,6 +2,7 @@ package com.hendisantika.schooladministrationsystem.service;
 
 import com.hendisantika.schooladministrationsystem.dto.response.ClassroomResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Classroom;
+import com.hendisantika.schooladministrationsystem.entity.user.Authority;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Teacher;
 import com.hendisantika.schooladministrationsystem.repository.ClassroomRepository;
 import com.hendisantika.schooladministrationsystem.repository.CourseRepository;
@@ -119,5 +120,17 @@ public class ClassroomService {
         classroomRepository.setHeadteacherFromTeacher(teacher.getTeacher().getId());
 
         return classroomRepository.save(classroom);
+    }
+
+    /**
+     * Deletes a classroom from database by id.
+     *
+     * @param id Id of the classroom.
+     */
+    public void delete(Long id) {
+        Classroom classroom = classroomRepository.getOne(id);
+        List<Authority> authorities = authService.findByName("ROLE_TEACHER");
+        classroom.getHeadTeacher().getTeacher().setAuthorities(authorities);
+        classroomRepository.delete(classroomRepository.getOne(id));
     }
 }
