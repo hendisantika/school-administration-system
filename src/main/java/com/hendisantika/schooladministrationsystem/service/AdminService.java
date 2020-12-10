@@ -17,6 +17,8 @@ import com.hendisantika.schooladministrationsystem.repository.user.UserRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : school-administration-system
@@ -86,4 +88,12 @@ public class AdminService {
         return "Archived";
     }
 
+    /**
+     * Returns a List of Archive Report.
+     *
+     * @return a list of archive report.
+     */
+    public List<Archive> getArchive() {
+        return archiveRepository.findAll();
+    }
 }
