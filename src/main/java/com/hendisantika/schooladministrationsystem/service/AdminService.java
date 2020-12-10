@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.entity.Classroom;
 import com.hendisantika.schooladministrationsystem.repository.AttendanceRepository;
 import com.hendisantika.schooladministrationsystem.repository.ClassroomRepository;
 import com.hendisantika.schooladministrationsystem.repository.ExamRepository;
@@ -50,4 +51,22 @@ public class AdminService {
 
     @Autowired
     private RemarkRepository remarkRepository;
+
+    /**
+     * When the school year ends, the admin able to update the
+     * entire database for new year and clear out the previous data.
+     * +!+ WARNING +!+ THIS FUNCTION DOESN'T CREATE ANY BACKUP. +!+ WARNING +!+
+     */
+    public void newYear() {
+        attendanceRepository.deleteAll();
+        timeTableRepository.deleteAll();
+        reportRepository.deleteAll();
+        examRepository.deleteAll();
+        remarkRepository.deleteAll();
+        for (Classroom classroom : classroomRepository.findAll()) {
+            int newYear = classroom.getYear() + 1;
+            classroom.setYear(newYear);
+            classroomRepository.save(classroom);
+        }
+    }
 }
