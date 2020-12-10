@@ -121,4 +121,18 @@ public class AttendanceService {
                 .sorted(Comparator.comparing(Attendance::getDateOfMiss).reversed())
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Returns a List of Students, who are in the class.
+     *
+     * @param classroomId Id of the classroom.
+     * @return List of student.
+     */
+    private List<Student> getAllStudentByClassroom(Long classroomId) {
+        return studentRepository
+                .findAll()
+                .stream()
+                .filter(student -> student.getClassroom().getId().equals(classroomId))
+                .collect(Collectors.toList());
+    }
 }
