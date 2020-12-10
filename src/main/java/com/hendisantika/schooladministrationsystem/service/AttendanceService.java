@@ -1,6 +1,8 @@
 package com.hendisantika.schooladministrationsystem.service;
 
 import com.hendisantika.schooladministrationsystem.dto.AttendanceDTO;
+import com.hendisantika.schooladministrationsystem.dto.response.AttendanceResponseDTO;
+import com.hendisantika.schooladministrationsystem.entity.Attendance;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.repository.AttendanceRepository;
 import com.hendisantika.schooladministrationsystem.repository.user.StudentRepository;
@@ -38,6 +40,31 @@ public class AttendanceService {
         List<AttendanceDTO> result = new ArrayList<>();
         for (Student student : getAllStudentByClassroom(classroom_id)) {
             result.add(new AttendanceDTO(student));
+        }
+        return result;
+    }
+
+    /**
+     * Creates new attendances for the missing students.
+     *
+     * @param attendanceResponseDTOS Submitted DTOs from web application.
+     * @return List of Attendances.
+     * @see Attendance
+     */
+    public List<Attendance> create(List<AttendanceResponseDTO> attendanceResponseDTOS) {
+        List<Attendance> result = new ArrayList<>();
+        for (AttendanceResponseDTO attendanceResponseDTO : attendanceResponseDTOS) {
+            if (attendanceResponseDTO.isMiss()) {
+                /* Finds student by id. */
+                Student student = studentRepository.getOne(attendanceResponseDTO.getStudentId());
+                Attendance attendance = new Attendance(
+                        student,
+                        attendanceResponseDTO.getLesson(),
+                        attendanceResponseDTO.getDateOfMiss()
+                );
+                result.add(attendance);
+                attendanceRepository.save(attendance);
+            }
         }
         return result;
     }
