@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ IDEA.
@@ -88,5 +90,20 @@ public class AttendanceService {
         Attendance attendance = attendanceRepository.getOne(id);
         attendance.setVerified(true);
         attendanceRepository.save(attendance);
+    }
+
+    /**
+     * Returns a List of non verified attendances by classroom.
+     *
+     * @param classroomId Id of the Classroom.
+     * @return a list of attendances.
+     */
+    public List<Attendance> getAllAttendancesByClassroom(Long classroomId) {
+        return attendanceRepository
+                .findAll()
+                .stream()
+                .filter(attendance -> attendance.getStudent().getClassroom().getId().equals(classroomId))
+                .sorted(Comparator.comparing(Attendance::getDateOfMiss).reversed())
+                .collect(Collectors.toList());
     }
 }
