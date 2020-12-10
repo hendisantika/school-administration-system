@@ -4,6 +4,7 @@ import com.hendisantika.schooladministrationsystem.entity.Classroom;
 import com.hendisantika.schooladministrationsystem.entity.Report;
 import com.hendisantika.schooladministrationsystem.entity.archive.Archive;
 import com.hendisantika.schooladministrationsystem.entity.archive.ArchiveReport;
+import com.hendisantika.schooladministrationsystem.entity.user.Authority;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.repository.AttendanceRepository;
 import com.hendisantika.schooladministrationsystem.repository.ClassroomRepository;
@@ -168,4 +169,17 @@ public class AdminService {
                 .filter(student -> student.getClassroom().getId().equals(id))
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Deletes a classroom from database by id.
+     *
+     * @param id Id of the classroom.
+     */
+    private void deleteClassroomById(Long id) {
+        Classroom classroom = classroomRepository.getOne(id);
+        List<Authority> authorities = authService.findByName("ROLE_TEACHER");
+        classroom.getHeadTeacher().getTeacher().setAuthorities(authorities);
+        classroomRepository.delete(classroomRepository.getOne(id));
+    }
+
 }
