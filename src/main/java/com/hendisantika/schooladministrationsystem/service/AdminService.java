@@ -96,4 +96,14 @@ public class AdminService {
     public List<Archive> getArchive() {
         return archiveRepository.findAll();
     }
+
+    /**
+     * Returns an Archive  by student id.
+     *
+     * @param id Id of the archive;
+     * @return a list of archive report.
+     */
+    public Archive getArchiveById(Long id) {
+        return archiveRepository.getOne(id);
+    }
 }
