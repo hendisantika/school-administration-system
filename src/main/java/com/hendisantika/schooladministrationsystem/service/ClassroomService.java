@@ -92,4 +92,32 @@ public class ClassroomService {
         return classroomRepository.save(classroom);
     }
 
+    /**
+     * Updates a classroom from database by id.
+     *
+     * @param id                   Id of the classroom.
+     * @param classroomResponseDTO Submitted DTO from web application.
+     * @return an updated classroom.
+     * @see Classroom
+     */
+    public Classroom update(Long id, ClassroomResponseDTO classroomResponseDTO) {
+        /* Finds classroom by id. */
+        Classroom classroom = classroomRepository.getOne(id);
+        /* Finds teacher by id. */
+        Teacher teacher = teacherRepository.getOne(classroomResponseDTO.getHeadTeacherId());
+
+        /* Updates the old classroom with a new data. */
+        classroom.setStart_year(classroomResponseDTO.getStartYear());
+        classroom.setEnd_year(classroomResponseDTO.getEndYear());
+        classroom.setHeadTeacher(teacher);
+        classroom.setLetter(classroomResponseDTO.getLetter());
+        classroom.setYear(classroomResponseDTO.getYear());
+
+        /* sets  a teacher role from ROLE_HEADTEACHER to ROLE_TEACHER. */
+        classroomRepository.setTeacherFromHeadteacher(classroom.getHeadTeacher().getTeacher().getId());
+        /* sets  a teacher role from ROLE_TEACHER to ROLE_HEADTEACHER. */
+        classroomRepository.setHeadteacherFromTeacher(teacher.getTeacher().getId());
+
+        return classroomRepository.save(classroom);
+    }
 }
