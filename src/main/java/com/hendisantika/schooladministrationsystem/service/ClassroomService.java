@@ -149,4 +149,24 @@ public class ClassroomService {
                 .filter(student -> student.getClassroom().getId().equals(id))
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Sets a course to all student, who are in the class. This
+     * method helps to update at a new year.
+     *
+     * @param classroomId Id of the classroom.
+     * @param courseId    Id of the Course.
+     */
+    public void setCourse(Long classroomId, Long courseId) {
+        List<Student> students = studentRepository
+                .findAll()
+                .stream()
+                .filter(student -> student.getClassroom().getId().equals(classroomId))
+                .collect(Collectors.toList());
+        for (Student student : students) {
+            if (courseRepository.courseIsAlreadyTaken(student.getId(), courseId) == 0) {
+                classroomRepository.setCourseForClassroom(student.getId(), courseId);
+            }
+        }
+    }
 }
