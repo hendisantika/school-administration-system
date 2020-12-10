@@ -169,4 +169,18 @@ public class ClassroomService {
             }
         }
     }
+
+    /**
+     * unsets a course to all student, who are in the class.
+     *
+     * @param classroomId Id of the classroom.
+     * @param courseId    Id of the Course.
+     */
+    public void unsetCourse(Long classroomId, Long courseId) {
+        List<Student> students = this.getStudentsFromClassroom(classroomId);
+        for (Student student : students) {
+            courseRepository.unsetStudentFromCourse(courseId, student.getId());
+        }
+    }
+
 }
