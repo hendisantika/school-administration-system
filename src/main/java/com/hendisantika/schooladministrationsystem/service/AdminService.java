@@ -1,7 +1,9 @@
 package com.hendisantika.schooladministrationsystem.service;
 
 import com.hendisantika.schooladministrationsystem.entity.Classroom;
+import com.hendisantika.schooladministrationsystem.entity.Report;
 import com.hendisantika.schooladministrationsystem.entity.archive.Archive;
+import com.hendisantika.schooladministrationsystem.entity.archive.ArchiveReport;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.repository.AttendanceRepository;
 import com.hendisantika.schooladministrationsystem.repository.ClassroomRepository;
@@ -17,6 +19,7 @@ import com.hendisantika.schooladministrationsystem.repository.user.UserRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -121,5 +124,33 @@ public class AdminService {
             deleteClassroomById(classroom_id);
         }
         classroomRepository.delete(classroomRepository.getOne(classroom_id));
+    }
+
+    /**
+     * This function finds all report by student and returns with a list of
+     * ArchiveReport. !IMPORTANT! The collected reports are from 2nd Semester.
+     *
+     * @param student_id Id of the student.
+     * @return a List of ArchiveReport.
+     */
+    private List<ArchiveReport> saveReportsByStudent(Long student_id, Archive archive) {
+        List<ArchiveReport> result = new ArrayList<>();
+        for (Report report : reportRepository.findAll()) {
+            if (report.getStudent().getId().equals(student_id) && report.getSemester() == 2) {
+                ArchiveReport archiveReport = new ArchiveReport(
+                        report.getCourse().getTitle(),
+                        report.getYear(),
+                        report.getMark(),
+                        archiveRepository.save(archive)
+                );
+                for (ArchiveReport archiver : archiveReportRepository.findAll()) {
+                    if (!archiver.equals(archiveReport)) {
+                        result.add(archiveReport);
+                        archiveReportRepository.save(archiveReport);
+                    }
+                }
+            }
+        }
+        return result;
     }
 }
