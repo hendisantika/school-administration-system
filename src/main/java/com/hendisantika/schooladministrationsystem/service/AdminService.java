@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ IDEA.
@@ -152,5 +153,19 @@ public class AdminService {
             }
         }
         return result;
+    }
+
+    /**
+     * Returns a List of Students, who are in the class.
+     *
+     * @param id Id of the classroom.
+     * @return List of students.
+     */
+    private List<Student> getStudentsFromClassroom(Long id) {
+        return studentRepository
+                .findAll()
+                .stream()
+                .filter(student -> student.getClassroom().getId().equals(id))
+                .collect(Collectors.toList());
     }
 }
