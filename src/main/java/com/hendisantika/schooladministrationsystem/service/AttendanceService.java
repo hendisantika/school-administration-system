@@ -106,4 +106,19 @@ public class AttendanceService {
                 .sorted(Comparator.comparing(Attendance::getDateOfMiss).reversed())
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Returns a List of Attendances by student id.
+     *
+     * @param studentId Id of the Student.
+     * @return a list of the attendances.
+     */
+    public List<Attendance> getAllByStudent(Long studentId) {
+        return attendanceRepository
+                .findAll()
+                .stream()
+                .filter(attendance -> attendance.getStudent().getId().equals(studentId) && !attendance.isVerified())
+                .sorted(Comparator.comparing(Attendance::getDateOfMiss).reversed())
+                .collect(Collectors.toList());
+    }
 }
