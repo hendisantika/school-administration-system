@@ -106,4 +106,20 @@ public class AdminService {
     public Archive getArchiveById(Long id) {
         return archiveRepository.getOne(id);
     }
+
+    /**
+     * If, the class finished the school, this function delete the class
+     * and also all student from the class.
+     *
+     * @param classroom_id Id of the classroom.
+     */
+    public void finished(Long classroom_id) {
+        List<Student> students = getStudentsFromClassroom(classroom_id);
+        for (Student student : students) {
+            studentRepository.delete(student);
+            userRepository.delete(student.getStudent());
+            deleteClassroomById(classroom_id);
+        }
+        classroomRepository.delete(classroomRepository.getOne(classroom_id));
+    }
 }
