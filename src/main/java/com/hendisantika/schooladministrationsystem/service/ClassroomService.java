@@ -3,6 +3,7 @@ package com.hendisantika.schooladministrationsystem.service;
 import com.hendisantika.schooladministrationsystem.dto.response.ClassroomResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Classroom;
 import com.hendisantika.schooladministrationsystem.entity.user.Authority;
+import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Teacher;
 import com.hendisantika.schooladministrationsystem.repository.ClassroomRepository;
 import com.hendisantika.schooladministrationsystem.repository.CourseRepository;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ IDEA.
@@ -132,5 +134,19 @@ public class ClassroomService {
         List<Authority> authorities = authService.findByName("ROLE_TEACHER");
         classroom.getHeadTeacher().getTeacher().setAuthorities(authorities);
         classroomRepository.delete(classroomRepository.getOne(id));
+    }
+
+    /**
+     * Returns a List of Students, who are in the class.
+     *
+     * @param id Id of the classroom.
+     * @return List of students.
+     */
+    public List<Student> getStudentsFromClassroom(Long id) {
+        return studentRepository
+                .findAll()
+                .stream()
+                .filter(student -> student.getClassroom().getId().equals(id))
+                .collect(Collectors.toList());
     }
 }
