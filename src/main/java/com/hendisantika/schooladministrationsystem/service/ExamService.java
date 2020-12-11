@@ -44,4 +44,14 @@ public class ExamService {
                 .filter(exam -> exam.getStudent().getId().equals(studentId))
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Returns an Exam object by id.
+     *
+     * @param id Id of the Exam.
+     * @return an exam object.
+     */
+    public Exam findById(Long id) {
+        return examRepository.getOne(id);
+    }
 }
