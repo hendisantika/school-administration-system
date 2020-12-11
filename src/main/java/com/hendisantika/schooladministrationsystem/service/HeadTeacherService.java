@@ -3,6 +3,7 @@ package com.hendisantika.schooladministrationsystem.service;
 import com.hendisantika.schooladministrationsystem.dto.ClassroomCourseResultDTO;
 import com.hendisantika.schooladministrationsystem.dto.FailedStudentDTO;
 import com.hendisantika.schooladministrationsystem.entity.Course;
+import com.hendisantika.schooladministrationsystem.entity.Exam;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.repository.CourseRepository;
 import com.hendisantika.schooladministrationsystem.repository.user.StudentRepository;
@@ -99,5 +100,13 @@ public class HeadTeacherService {
             result.add(calcAverageByStudent(student, courseId));
         }
         return result.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
+    }
+
+    private double calcAverageByStudent(Student student, Long courseId) {
+        List<Exam> exams = student.getExams()
+                .stream()
+                .filter(exam -> exam.getCourse().getId().equals(courseId))
+                .collect(Collectors.toList());
+        return Math.floor(exams.stream().mapToDouble(Exam::getMark).average().orElse(Double.NaN) * 100) / 100;
     }
 }
