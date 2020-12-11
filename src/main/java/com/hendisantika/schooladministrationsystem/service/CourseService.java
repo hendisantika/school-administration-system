@@ -107,4 +107,14 @@ public class CourseService {
 
         return courseRepository.save(course);
     }
+
+    /**
+     * Deletes a course from database by id.
+     *
+     * @param id Id of the course.
+     */
+    public void delete(Long id) {
+        courseRepository.deleteFromStudentCourse(id);
+        courseRepository.delete(courseRepository.getOne(id));
+    }
 }
