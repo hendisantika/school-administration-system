@@ -1,6 +1,8 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.dto.response.CourseResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Course;
+import com.hendisantika.schooladministrationsystem.entity.user.group.Teacher;
 import com.hendisantika.schooladministrationsystem.repository.CourseRepository;
 import com.hendisantika.schooladministrationsystem.repository.user.StudentRepository;
 import com.hendisantika.schooladministrationsystem.repository.user.TeacherRepository;
@@ -64,5 +66,22 @@ public class CourseService {
                 .stream()
                 .filter(course -> course.getTeacher().getId().equals(teacher_id))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Creates a new course and save into the database.
+     *
+     * @param courseResponseDTO Submitted DTO from web application.
+     * @return a new Course object.
+     * @see Course
+     */
+    public Course create(CourseResponseDTO courseResponseDTO) {
+        /* Finds teacher by id. */
+        Teacher teacher = teacherRepository.getOne(courseResponseDTO.getTeacherId());
+        return courseRepository.save(new Course(
+                courseResponseDTO.getTitle(),
+                courseResponseDTO.getYear(),
+                teacher
+        ));
     }
 }
