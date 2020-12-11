@@ -2,6 +2,7 @@ package com.hendisantika.schooladministrationsystem.service;
 
 import com.hendisantika.schooladministrationsystem.dto.response.CourseResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Course;
+import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Teacher;
 import com.hendisantika.schooladministrationsystem.repository.CourseRepository;
 import com.hendisantika.schooladministrationsystem.repository.user.StudentRepository;
@@ -116,5 +117,22 @@ public class CourseService {
     public void delete(Long id) {
         courseRepository.deleteFromStudentCourse(id);
         courseRepository.delete(courseRepository.getOne(id));
+    }
+
+    /**
+     * Sets a course to student by ids.
+     *
+     * @param studentId Id of the Course.
+     * @param courseId  Id of the Student.
+     */
+    public void setCourse(Long studentId, Long courseId) {
+        /* Finds student by id. */
+        Student student = studentRepository.getOne(studentId);
+        /* Finds course by id. */
+        Course course = courseRepository.getOne(courseId);
+        if (courseRepository.courseIsAlreadyTaken(studentId, courseId) == 0) {
+            course.getStudents().add(student);
+            courseRepository.save(course);
+        }
     }
 }
