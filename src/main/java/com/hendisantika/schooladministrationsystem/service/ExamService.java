@@ -132,4 +132,35 @@ public class ExamService {
         }
         return result;
     }
+
+    /**
+     * Creates a new exams and save into the database.
+     *
+     * @param examResponseDTOS Submitted DTOs from web application.
+     * @return a new Exam objects.
+     * @see Exam
+     */
+    public List<Exam> createExamsFromForm(List<ExamResponseDTO> examResponseDTOS) {
+        List<Exam> result = new ArrayList<>();
+        /* Finds course by id. */
+        Course course = courseRepository.getOne(examResponseDTOS.get(0).getCourseId());
+
+        for (ExamResponseDTO examResponseDTO : examResponseDTOS) {
+            /* Finds student by id. */
+            if (examResponseDTO.getMark() >= 1 && examResponseDTO.getMark() <= 5) {
+                Student student = studentRepository.getOne(examResponseDTO.getStudentId());
+                Exam exam = new Exam(
+                        examResponseDTO.getMark(),
+                        examResponseDTO.getWrittenAt(),
+                        ExamType.valueOf(examResponseDTO.getExamType()),
+                        course,
+                        student
+                ); // Creates a new exam.
+                result.add(exam);
+                examRepository.save(exam); //Saves the exam.
+            }
+
+        }
+        return result;
+    }
 }
