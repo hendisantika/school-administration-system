@@ -1,6 +1,10 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.dto.response.ExamResponseDTO;
+import com.hendisantika.schooladministrationsystem.entity.Course;
 import com.hendisantika.schooladministrationsystem.entity.Exam;
+import com.hendisantika.schooladministrationsystem.entity.ExamType;
+import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.repository.CourseRepository;
 import com.hendisantika.schooladministrationsystem.repository.ExamRepository;
 import com.hendisantika.schooladministrationsystem.repository.user.StudentRepository;
@@ -53,5 +57,31 @@ public class ExamService {
      */
     public Exam findById(Long id) {
         return examRepository.getOne(id);
+    }
+
+    /**
+     * Creates a new exam and save into the database.
+     *
+     * @param examResponseDTO Submitted DTO from web application.
+     * @return a new Exam object.
+     * @see Exam
+     */
+    public Exam create(ExamResponseDTO examResponseDTO) {
+        /* Finds student by id. */
+        Student student = studentRepository.getOne(examResponseDTO.getStudentId());
+        /* Finds course by id. */
+        Course course = courseRepository.getOne(examResponseDTO.getCourseId());
+
+
+        if (examResponseDTO.getMark() <= 1 && examResponseDTO.getMark() >= 5) {
+            return examRepository.save(new Exam(
+                    examResponseDTO.getMark(),
+                    examResponseDTO.getWrittenAt(),
+                    ExamType.valueOf(examResponseDTO.getExamType()),
+                    course,
+                    student
+            ));
+        }
+        return null;
     }
 }
