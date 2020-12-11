@@ -135,4 +135,14 @@ public class CourseService {
             courseRepository.save(course);
         }
     }
+
+    /**
+     * Unsets a course to student by ids.
+     *
+     * @param studentId Id of the Student.
+     * @param courseId  Id of the Course.
+     */
+    public void unsetCourse(Long studentId, Long courseId) {
+        courseRepository.unsetStudentFromCourse(courseId, studentId);
+    }
 }
