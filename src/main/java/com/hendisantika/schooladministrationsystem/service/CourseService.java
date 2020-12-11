@@ -38,4 +38,18 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
+    /**
+     * Returns a Course object by id, if course exist
+     * or returns a null value.
+     *
+     * @param id Id of the course.
+     * @return a course object by id.
+     * @see Course
+     */
+    public Course findById(Long id) {
+        return courseRepository
+                .findById(id)
+                .orElse(null);
+    }
+
 }
