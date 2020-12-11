@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ IDEA.
@@ -52,4 +53,16 @@ public class CourseService {
                 .orElse(null);
     }
 
+    /**
+     * Returns a List of Courses by Teacher id.
+     *
+     * @param teacher_id Id of the Teacher.
+     * @return a list of courses.
+     */
+    public List<Course> getCoursesByTeacherId(Long teacher_id) {
+        return courseRepository.findAll()
+                .stream()
+                .filter(course -> course.getTeacher().getId().equals(teacher_id))
+                .collect(Collectors.toList());
+    }
 }
