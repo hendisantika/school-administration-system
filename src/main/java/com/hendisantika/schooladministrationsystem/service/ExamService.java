@@ -103,4 +103,13 @@ public class ExamService {
         }
         return examRepository.save(exam);
     }
+
+    /**
+     * Deletes a exam from database by id.
+     *
+     * @param id Id of the exam.
+     */
+    public void delete(Long id) {
+        examRepository.delete(examRepository.getOne(id));
+    }
 }
