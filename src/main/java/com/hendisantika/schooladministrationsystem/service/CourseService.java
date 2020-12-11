@@ -84,4 +84,27 @@ public class CourseService {
                 teacher
         ));
     }
+
+    /**
+     * Updates a course from database by id.
+     *
+     * @param id                Id of the course.
+     * @param courseResponseDTO Submitted DTO from web application.
+     * @return an updated course.
+     * @see Course
+     */
+    public Course update(Long id, CourseResponseDTO courseResponseDTO) {
+        /* Finds course by id. */
+        Course course = courseRepository.getOne(id);
+        /* Finds teacher by id. */
+        Teacher teacher = teacherRepository.getOne(courseResponseDTO.getTeacherId());
+
+        /* Updates the old course with a new data. */
+        course.setTeacher(teacher);
+        course.setTitle(course.getTitle());
+        course.setYear(course.getYear());
+        courseRepository.setTeacher(course.getId(), teacher.getId());
+
+        return courseRepository.save(course);
+    }
 }
