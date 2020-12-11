@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ IDEA.
@@ -81,5 +82,13 @@ public class HeadTeacherService {
             }
         }
         return result;
+    }
+
+    private List<Student> getStudentsFromClassroom(Long id) {
+        return studentRepository
+                .findAll()
+                .stream()
+                .filter(student -> student.getClassroom().getId().equals(id))
+                .collect(Collectors.toList());
     }
 }
