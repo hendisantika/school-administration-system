@@ -163,4 +163,18 @@ public class ExamService {
         }
         return result;
     }
+
+    /**
+     * Collect all exam type.
+     *
+     * @return exam types.
+     */
+    public List<ExamType> getAllExamType() {
+        List<ExamType> result = new ArrayList<>();
+        result.add(ExamType.TOPIC_TEST);
+        result.add(ExamType.TEST);
+        result.add(ExamType.REPETITION);
+        result.add(ExamType.HOMEWORK);
+        return result;
+    }
 }
