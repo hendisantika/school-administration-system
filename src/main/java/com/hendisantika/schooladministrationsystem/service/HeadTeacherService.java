@@ -91,4 +91,13 @@ public class HeadTeacherService {
                 .filter(student -> student.getClassroom().getId().equals(id))
                 .collect(Collectors.toList());
     }
+
+    private double collectResultByCourse(Long classroomId, Long courseId) {
+        List<Double> result = new ArrayList<>();
+        List<Student> students = getStudentsFromClassroom(classroomId);
+        for (Student student : students) {
+            result.add(calcAverageByStudent(student, courseId));
+        }
+        return result.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN);
+    }
 }
