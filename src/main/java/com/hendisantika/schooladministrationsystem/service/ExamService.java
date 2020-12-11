@@ -84,4 +84,23 @@ public class ExamService {
         }
         return null;
     }
+
+    /**
+     * Updates a exam from database by id.
+     *
+     * @param id              Id of the exam.
+     * @param examResponseDTO Submitted DTO from web application.
+     * @return an updated exam.
+     * @see Exam
+     */
+    public Exam update(Long id, ExamResponseDTO examResponseDTO) {
+        /* Finds exam by id. */
+        Exam exam = examRepository.getOne(id);
+
+        if (examResponseDTO.getMark() >= 1 && examResponseDTO.getMark() <= 5) {
+            exam.setMark(examResponseDTO.getMark());
+            exam.setWrittenAt(examResponseDTO.getWrittenAt());
+        }
+        return examRepository.save(exam);
+    }
 }
