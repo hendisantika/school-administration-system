@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.dto.ExamDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.ExamResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Course;
 import com.hendisantika.schooladministrationsystem.entity.Exam;
@@ -11,6 +12,8 @@ import com.hendisantika.schooladministrationsystem.repository.user.StudentReposi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -111,5 +114,22 @@ public class ExamService {
      */
     public void delete(Long id) {
         examRepository.delete(examRepository.getOne(id));
+    }
+
+    /**
+     * Returns a form that contains a list of students
+     * and mark field for each student.
+     *
+     * @param classroomId Id of the classroom.
+     * @param written_at  The exam date.
+     * @return A form table to create exams to all student in classroom.
+     */
+    public List<ExamDTO> makeExamsFormToClassroom(Long classroomId, LocalDate written_at, String examType) {
+        List<Student> students = getStudentFromClassroom(classroomId);
+        List<ExamDTO> result = new ArrayList<>();
+        for (Student student : students) {
+            result.add(new ExamDTO(student, written_at, examType));
+        }
+        return result;
     }
 }
