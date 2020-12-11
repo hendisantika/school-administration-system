@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.dto.ClassroomCourseResultDTO;
 import com.hendisantika.schooladministrationsystem.dto.FailedStudentDTO;
 import com.hendisantika.schooladministrationsystem.entity.Course;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
@@ -52,6 +53,31 @@ public class HeadTeacherService {
                         student,
                         failedCourses
                 ));
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Returns a list of ClassroomCourseResultDTO. This function create an
+     * average for each course by class id.
+     *
+     * @param classroomId Id of the class.
+     * @return List of ClassroomCourseResultDTO by classroom id.
+     */
+    public List<ClassroomCourseResultDTO> showResultByCourse(Long classroomId) {
+        List<ClassroomCourseResultDTO> result = new ArrayList<>();
+        List<Student> students = getStudentsFromClassroom(classroomId);
+        List<Long> courses = new ArrayList<>();
+        for (Student student : students) {
+            for (Course course : courseRepository.findAll()) {
+                if (student.getCourses().contains(course) && !courses.contains(course.getId())) {
+                    result.add(new ClassroomCourseResultDTO(
+                            course,
+                            collectResultByCourse(classroomId, course.getId())
+                    ));
+                    courses.add(course.getId());
+                }
             }
         }
         return result;
