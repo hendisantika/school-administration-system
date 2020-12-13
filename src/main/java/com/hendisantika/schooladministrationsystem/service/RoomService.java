@@ -56,4 +56,14 @@ public class RoomService {
                 roomResponseDTO.getClassroomNumber()
         ));
     }
+
+    /**
+     * Deletes a Room from database by id.
+     *
+     * @param id Id of the Room.
+     */
+    public void delete(Long id) {
+        Room room = roomRepository.getOne(id);
+        roomRepository.delete(room);
+    }
 }
