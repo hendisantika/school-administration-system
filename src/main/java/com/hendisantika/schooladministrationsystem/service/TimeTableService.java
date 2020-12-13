@@ -2,6 +2,7 @@ package com.hendisantika.schooladministrationsystem.service;
 
 import com.hendisantika.schooladministrationsystem.entity.TimeTableEntity;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
+import com.hendisantika.schooladministrationsystem.entity.user.group.Teacher;
 import com.hendisantika.schooladministrationsystem.repository.ClassroomRepository;
 import com.hendisantika.schooladministrationsystem.repository.CourseRepository;
 import com.hendisantika.schooladministrationsystem.repository.RoomRepository;
@@ -54,6 +55,24 @@ public class TimeTableService {
         TimeTableEntity[][] result = new TimeTableEntity[12][5];
         Student student = studentRepository.getOne(id);
         List<TimeTableEntity> timeTableEntities = getLessonsByStudent(student.getId());
+        for (TimeTableEntity tableEntity : timeTableEntities) {
+            result[tableEntity.getLessonNumber()][tableEntity.getDay()] = tableEntity;
+        }
+        return result;
+    }
+
+    /**
+     * Returns a TimeTable 2d array to teacher. The table size
+     * is 12x5. The y diagonal represents the days and x diagonal
+     * shows the lecture.
+     *
+     * @param id Id of the Teacher.
+     * @return a TimeTable 2d matrix.
+     */
+    public TimeTableEntity[][] getTimeTableByTeacher(Long id) {
+        TimeTableEntity[][] result = new TimeTableEntity[12][5];
+        Teacher teacher = teacherRepository.getOne(id);
+        List<TimeTableEntity> timeTableEntities = getLessonsByTeacher(teacher.getId());
         for (TimeTableEntity tableEntity : timeTableEntities) {
             result[tableEntity.getLessonNumber()][tableEntity.getDay()] = tableEntity;
         }
