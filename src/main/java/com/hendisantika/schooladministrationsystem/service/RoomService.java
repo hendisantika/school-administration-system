@@ -29,4 +29,17 @@ public class RoomService {
     public List<Room> findAll() {
         return roomRepository.findAll();
     }
+
+
+    /**
+     * Returns a Room object by id, if course exist
+     * or returns a null value.
+     *
+     * @param id Id of the Room.
+     * @return a Room object by id.
+     * @see Room
+     */
+    public Room findById(Long id) {
+        return roomRepository.getOne(id);
+    }
 }
