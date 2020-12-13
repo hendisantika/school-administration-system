@@ -155,4 +155,13 @@ public class TimeTableService {
 
         return timeTableRepository.save(tableEntity);
     }
+
+    /**
+     * Deletes a TimeTableEntity from database by id.
+     *
+     * @param id Id of the TimeTableEntity.
+     */
+    public void delete(Long id) {
+        timeTableRepository.delete(timeTableRepository.getOne(id));
+    }
 }
