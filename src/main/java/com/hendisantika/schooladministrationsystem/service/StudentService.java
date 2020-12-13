@@ -6,6 +6,7 @@ import com.hendisantika.schooladministrationsystem.entity.Classroom;
 import com.hendisantika.schooladministrationsystem.entity.Course;
 import com.hendisantika.schooladministrationsystem.entity.Exam;
 import com.hendisantika.schooladministrationsystem.entity.ExamType;
+import com.hendisantika.schooladministrationsystem.entity.Report;
 import com.hendisantika.schooladministrationsystem.entity.TeacherPreference;
 import com.hendisantika.schooladministrationsystem.entity.user.User;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Gender;
@@ -227,6 +228,19 @@ public class StudentService {
         for (Exam exam : examRepository.findAll()) {
             if (exam.getStudent().getId().equals(studentId)) {
                 examRepository.delete(exam);
+            }
+        }
+    }
+
+    /**
+     * Deletes all reports which connected to student except the archived reports.
+     *
+     * @param studentId Id of the student.
+     */
+    private void deleteAllReportByStudent(Long studentId) {
+        for (Report report : reportRepository.findAll()) {
+            if (report.getStudent().getId().equals(studentId)) {
+                reportRepository.delete(report);
             }
         }
     }
