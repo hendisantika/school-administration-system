@@ -57,4 +57,23 @@ public class TeacherService {
         return teacherRepository
                 .findById(id).orElse(null);
     }
+
+    /**
+     * Returns a Teacher object by username, if teacher exist
+     * or returns a null value.
+     *
+     * @param userId Id of the teacher user.
+     * @return a teacher object by user id.
+     * @see Teacher
+     */
+    @Override
+    public Teacher findByUserId(Long userId) {
+        return teacherRepository
+                .findAll()
+                .stream()
+                .filter(teacher -> teacher.getTeacher()
+                        .getId().equals(userId))
+                .findAny()
+                .orElse(null);
+    }
 }
