@@ -16,6 +16,7 @@ import com.hendisantika.schooladministrationsystem.repository.user.TeacherReposi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -163,5 +164,23 @@ public class TimeTableService {
      */
     public void delete(Long id) {
         timeTableRepository.delete(timeTableRepository.getOne(id));
+    }
+
+    /**
+     * Returns a List of Courses that Student has.
+     *
+     * @param id Id of the Student.
+     * @return List of course.
+     */
+    private List<Course> getCourseByStudent(Long id) {
+        List<Course> result = new ArrayList<>();
+        for (Course course : courseRepository.findAll()) {
+            for (Student student : course.getStudents()) {
+                if (student.getId().equals(id)) {
+                    result.add(course);
+                }
+            }
+        }
+        return result;
     }
 }
