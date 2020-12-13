@@ -82,4 +82,14 @@ public class RemarkService {
         remark.setText(remarkResponseDTO.getText());
         return remarkRepository.save(remark);
     }
+
+    /**
+     * Deletes a remark from database by id.
+     *
+     * @param id Id of the remark.
+     */
+    public void delete(Long id) {
+        Remark remark = remarkRepository.getOne(id);
+        remarkRepository.delete(remark);
+    }
 }
