@@ -58,4 +58,18 @@ public class MessageService {
     public Message create(MessageResponseDTO messageResponseDTO) {
         return messageRepository.save(new Message(messageResponseDTO.getText()));
     }
+
+    /**
+     * Updates a message from database by id.
+     *
+     * @param id                 Id of the message.
+     * @param messageResponseDTO Submitted DTO from web application.
+     * @return an updated message.
+     * @see Message
+     */
+    public Message update(Long id, MessageResponseDTO messageResponseDTO) {
+        Message message = messageRepository.getOne(id);
+        message.setText(messageResponseDTO.getText());
+        return messageRepository.save(message);
+    }
 }
