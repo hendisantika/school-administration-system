@@ -70,4 +70,23 @@ public class StudentService {
         return studentRepository
                 .findById(id).orElse(null);
     }
+
+    /**
+     * Returns a Students object by username, if classroom exist
+     * or returns a null value.
+     *
+     * @param userId Id of the student user.
+     * @return a student object by user id.
+     * @see Student
+     */
+    public Student findByUserId(Long userId) {
+        return studentRepository
+                .findAll()
+                .stream()
+                .filter(student -> student.getStudent()
+                        .getId().equals(userId))
+                .findAny()
+                .orElse(null);
+    }
+
 }
