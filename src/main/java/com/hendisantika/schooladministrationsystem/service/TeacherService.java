@@ -116,4 +116,13 @@ public class TeacherService {
 
         return teacherRepository.save(teacher);
     }
+
+    /**
+     * Deletes a teacher from database by id.
+     *
+     * @param id Id of the teacher.
+     */
+    public void delete(Long id) {
+        teacherRepository.delete(teacherRepository.getOne(id));
+    }
 }
