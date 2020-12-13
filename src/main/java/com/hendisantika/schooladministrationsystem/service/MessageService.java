@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.dto.response.MessageResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Message;
 import com.hendisantika.schooladministrationsystem.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,16 @@ public class MessageService {
      */
     public Message findById(Long id) {
         return messageRepository.getOne(id);
+    }
+
+    /**
+     * Creates a new message and save into the database.
+     *
+     * @param messageResponseDTO Submitted DTO from web application.
+     * @return a new Message object.
+     * @see Message
+     */
+    public Message create(MessageResponseDTO messageResponseDTO) {
+        return messageRepository.save(new Message(messageResponseDTO.getText()));
     }
 }
