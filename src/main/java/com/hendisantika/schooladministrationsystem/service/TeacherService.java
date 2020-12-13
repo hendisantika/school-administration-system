@@ -1,6 +1,7 @@
 package com.hendisantika.schooladministrationsystem.service;
 
 import com.hendisantika.schooladministrationsystem.dto.response.TeacherResponseDTO;
+import com.hendisantika.schooladministrationsystem.entity.Course;
 import com.hendisantika.schooladministrationsystem.entity.TeacherPreference;
 import com.hendisantika.schooladministrationsystem.entity.user.Authority;
 import com.hendisantika.schooladministrationsystem.entity.user.User;
@@ -124,5 +125,18 @@ public class TeacherService {
      */
     public void delete(Long id) {
         teacherRepository.delete(teacherRepository.getOne(id));
+    }
+
+    /**
+     * Sets a course to teacher by ids.
+     *
+     * @param teacherId Id of the Teacher.
+     * @param courseId  Id of the Course.
+     */
+    public void setCourse(Long teacherId, Long courseId) {
+        Teacher teacher = teacherRepository.getOne(teacherId);
+        Course course = courseRepository.getOne(courseId);
+        course.setTeacher(teacher);
+        courseRepository.save(course);
     }
 }
