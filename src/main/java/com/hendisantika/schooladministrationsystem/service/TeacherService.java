@@ -155,4 +155,18 @@ public class TeacherService {
                 teacherPreferenceResponseDTO.getHomeworkWeight()
         );
     }
+
+    /**
+     * Get all preferences by teacher id.
+     *
+     * @param teacherId Id of the Teacher.
+     * @return List of the TeacherPreferences.
+     */
+    public TeacherPreference getAllTeacherPreferences(Long teacherId) {
+        return teacherPreferenceRepository.findAll()
+                .stream()
+                .filter(teacherPreference -> teacherPreference.getTeacher().getId().equals(teacherId))
+                .findAny()
+                .orElse(null);
+    }
 }
