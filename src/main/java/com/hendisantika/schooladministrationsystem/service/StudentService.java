@@ -1,5 +1,9 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.dto.response.StudentResponseDTO;
+import com.hendisantika.schooladministrationsystem.entity.Classroom;
+import com.hendisantika.schooladministrationsystem.entity.user.User;
+import com.hendisantika.schooladministrationsystem.entity.user.group.Gender;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.repository.AttendanceRepository;
 import com.hendisantika.schooladministrationsystem.repository.ClassroomRepository;
@@ -89,4 +93,31 @@ public class StudentService {
                 .orElse(null);
     }
 
+    /**
+     * Creates a new student and save into the database.
+     *
+     * @param studentResponseDTO Submitted DTO from web application.
+     * @return a new Student object.
+     * @see Student
+     */
+    public Student create(StudentResponseDTO studentResponseDTO) {
+        User user = userRepository.findByUsername(studentResponseDTO.getUsername());
+        Classroom classroom = classroomRepository.getOne(studentResponseDTO.getClassroomId());
+        Student student = new Student();
+
+        student.setAddress(studentResponseDTO.getAddress());
+        student.setClassroom(classroom);
+        student.setDateOfBirth(studentResponseDTO.getDateOfBirth());
+        student.setGender(Gender.valueOf(studentResponseDTO.getGender()));
+        student.setEducationId(studentResponseDTO.getEducationId());
+        student.setHealthCareId(studentResponseDTO.getHealthCareId());
+        student.setStart_year(studentResponseDTO.getStartYear());
+        student.setParent1Name(studentResponseDTO.getParent1Name());
+        student.setParent2Name(studentResponseDTO.getParent2Name());
+        student.setParent1Phone(studentResponseDTO.getParent1Phone());
+        student.setParent2Phone(studentResponseDTO.getParent2Phone());
+        student.setStudent(user);
+        studentRepository.save(student);
+        return student;
+    }
 }
