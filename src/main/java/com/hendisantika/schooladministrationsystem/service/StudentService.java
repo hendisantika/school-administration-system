@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.repository.AttendanceRepository;
 import com.hendisantika.schooladministrationsystem.repository.ClassroomRepository;
 import com.hendisantika.schooladministrationsystem.repository.CourseRepository;
@@ -10,6 +11,8 @@ import com.hendisantika.schooladministrationsystem.repository.user.StudentReposi
 import com.hendisantika.schooladministrationsystem.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -45,4 +48,13 @@ public class StudentService {
 
     @Autowired
     private TeacherPreferenceRepository teacherPreferenceRepository;
+
+    /**
+     * Returns a List of Students.
+     *
+     * @return students from database.
+     */
+    public List<Student> findAll() {
+        return studentRepository.findAll();
+    }
 }
