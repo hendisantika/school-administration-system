@@ -183,4 +183,24 @@ public class TimeTableService {
         }
         return result;
     }
+
+    /**
+     * Returns a List of TimeTableEntity. Each element
+     * represents a lecture.
+     *
+     * @param id Id of the Student.
+     * @return List of timeTableEntity.
+     */
+    private List<TimeTableEntity> getLessonsByStudent(Long id) {
+        List<Course> courses = getCourseByStudent(id);
+        List<TimeTableEntity> result = new ArrayList<>();
+        for (TimeTableEntity tableEntity : timeTableRepository.findAll()) {
+            for (Course course : courses) {
+                if (tableEntity.getCourse().getId().equals(course.getId())) {
+                    result.add(tableEntity);
+                }
+            }
+        }
+        return result;
+    }
 }
