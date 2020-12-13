@@ -94,4 +94,13 @@ public class TimeTableService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Returns an TimeTableEntity Object by id.
+     *
+     * @param id Id of the TimeTableEntity
+     * @return a TimeTableEntity object.
+     */
+    public TimeTableEntity findById(Long id) {
+        return timeTableRepository.getOne(id);
+    }
 }
