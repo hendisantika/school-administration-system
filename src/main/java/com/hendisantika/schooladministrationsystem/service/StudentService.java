@@ -217,4 +217,17 @@ public class StudentService {
         deleteAllExamByStudent(studentId);
         deleteAllReportByStudent(studentId);
     }
+
+    /**
+     * Deletes all exam which student wrote.
+     *
+     * @param studentId Id of the student.
+     */
+    private void deleteAllExamByStudent(Long studentId) {
+        for (Exam exam : examRepository.findAll()) {
+            if (exam.getStudent().getId().equals(studentId)) {
+                examRepository.delete(exam);
+            }
+        }
+    }
 }
