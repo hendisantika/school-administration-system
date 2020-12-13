@@ -57,4 +57,17 @@ public class StudentService {
     public List<Student> findAll() {
         return studentRepository.findAll();
     }
+
+    /**
+     * Returns a Students object by id, if classroom exist
+     * or returns a null value.
+     *
+     * @param id Id of the student.
+     * @return a student object by id.
+     * @see Student
+     */
+    public Student findById(Long id) {
+        return studentRepository
+                .findById(id).orElse(null);
+    }
 }
