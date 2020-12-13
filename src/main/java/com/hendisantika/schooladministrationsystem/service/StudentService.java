@@ -206,4 +206,15 @@ public class StudentService {
         }
         return sum / examsNumber;
     }
+
+    /**
+     * Deletes all data, which connected to Student.
+     *
+     * @param studentId Id of the student.
+     */
+    private void deleteStudentData(Long studentId) {
+        deleteAllAttendanceByStudent(studentId);
+        deleteAllExamByStudent(studentId);
+        deleteAllReportByStudent(studentId);
+    }
 }
