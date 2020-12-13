@@ -1,6 +1,8 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.dto.response.RemarkResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Remark;
+import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.repository.RemarkRepository;
 import com.hendisantika.schooladministrationsystem.repository.user.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +52,20 @@ public class RemarkService {
      */
     public Remark findById(Long id) {
         return remarkRepository.getOne(id);
+    }
+
+    /**
+     * Creates a new remark and save into the database.
+     *
+     * @param remarkResponseDTO Submitted DTO from web application.
+     * @return a new Remark object.
+     * @see Remark
+     */
+    public Remark create(RemarkResponseDTO remarkResponseDTO) {
+        /* Finds student by id. */
+        Student student = studentRepository.getOne(remarkResponseDTO.getStudentId());
+        return remarkRepository.save(new Remark(
+                remarkResponseDTO.getText(),
+                student));
     }
 }
