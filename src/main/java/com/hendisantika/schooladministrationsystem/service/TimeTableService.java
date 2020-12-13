@@ -131,4 +131,28 @@ public class TimeTableService {
                 classroom
         ));
     }
+
+    /**
+     * Updates a TimeTableEntity from database by id.
+     *
+     * @param id                         Id of the TimeTableEntity.
+     * @param timeTableEntityResponseDTO Submitted DTO from web application.
+     * @return an updated TimeTableEntity.
+     * @see TimeTableEntity
+     */
+    public TimeTableEntity update(Long id, TimeTableEntityResponseDTO timeTableEntityResponseDTO) {
+        /* Finds timeTableEntity by id. */
+        TimeTableEntity tableEntity = timeTableRepository.getOne(id);
+        /* Finds classroom by id. */
+        Classroom classroom = classroomRepository.getOne(timeTableEntityResponseDTO.getClassroomId());
+        /* Finds room by id. */
+        Room room = roomRepository.getOne(timeTableEntityResponseDTO.getRoomId());
+
+        tableEntity.setRoom(room);
+        tableEntity.setDay(timeTableEntityResponseDTO.getDay());
+        tableEntity.setLessonNumber(timeTableEntityResponseDTO.getLessonNumber());
+        tableEntity.setClassroom(classroom);
+
+        return timeTableRepository.save(tableEntity);
+    }
 }
