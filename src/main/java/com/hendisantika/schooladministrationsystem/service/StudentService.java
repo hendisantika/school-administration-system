@@ -1,7 +1,10 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.dto.SummaryDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.StudentResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Classroom;
+import com.hendisantika.schooladministrationsystem.entity.Course;
+import com.hendisantika.schooladministrationsystem.entity.Exam;
 import com.hendisantika.schooladministrationsystem.entity.user.User;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Gender;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
@@ -16,7 +19,9 @@ import com.hendisantika.schooladministrationsystem.repository.user.UserRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ IDEA.
@@ -156,5 +161,26 @@ public class StudentService {
     public void delete(Long id) {
         deleteStudentData(id);
         studentRepository.deleteById(id);
+    }
+
+    /**
+     * Returns a List of course-marks pairs by student id.
+     *
+     * @param id Id of the student.
+     * @return List of results for each course.
+     */
+    public List<SummaryDTO> getSummary(Long id) {
+        Student student = studentRepository.getOne(id);
+        List<SummaryDTO> summaryDTOList = new ArrayList<>();
+        for (Course course : courseRepository.findAll()) {
+            if (student.getCourses().contains(course)) {
+                List<Exam> exams = student.getExams()
+                        .stream()
+                        .filter(exam -> exam.getCourse().getId().equals(course.getId()))
+                        .collect(Collectors.toList());
+                summaryDTOList.add(new SummaryDTO(course.getTitle(), exams, weightedAverage(exams, course)));
+            }
+        }
+        return summaryDTOList;
     }
 }
