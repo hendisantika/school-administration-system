@@ -2,6 +2,7 @@ package com.hendisantika.schooladministrationsystem.service;
 
 import com.hendisantika.schooladministrationsystem.dto.SummaryDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.StudentResponseDTO;
+import com.hendisantika.schooladministrationsystem.entity.Attendance;
 import com.hendisantika.schooladministrationsystem.entity.Classroom;
 import com.hendisantika.schooladministrationsystem.entity.Course;
 import com.hendisantika.schooladministrationsystem.entity.Exam;
@@ -241,6 +242,19 @@ public class StudentService {
         for (Report report : reportRepository.findAll()) {
             if (report.getStudent().getId().equals(studentId)) {
                 reportRepository.delete(report);
+            }
+        }
+    }
+
+    /**
+     * Deletes all attendances which connected to student.
+     *
+     * @param studentId Id of the student.
+     */
+    private void deleteAllAttendanceByStudent(Long studentId) {
+        for (Attendance attendance : attendanceRepository.findAll()) {
+            if (attendance.getStudent().getId().equals(studentId)) {
+                attendanceRepository.delete(attendance);
             }
         }
     }
