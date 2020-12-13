@@ -72,4 +72,14 @@ public class MessageService {
         message.setText(messageResponseDTO.getText());
         return messageRepository.save(message);
     }
+
+    /**
+     * Deletes a message from database by id.
+     *
+     * @param id Id of the message.
+     */
+    public void delete(Long id) {
+        Message message = messageRepository.getOne(id);
+        messageRepository.delete(message);
+    }
 }
