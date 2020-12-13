@@ -5,6 +5,8 @@ import com.hendisantika.schooladministrationsystem.dto.response.StudentResponseD
 import com.hendisantika.schooladministrationsystem.entity.Classroom;
 import com.hendisantika.schooladministrationsystem.entity.Course;
 import com.hendisantika.schooladministrationsystem.entity.Exam;
+import com.hendisantika.schooladministrationsystem.entity.ExamType;
+import com.hendisantika.schooladministrationsystem.entity.TeacherPreference;
 import com.hendisantika.schooladministrationsystem.entity.user.User;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Gender;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
@@ -182,5 +184,26 @@ public class StudentService {
             }
         }
         return summaryDTOList;
+    }
+
+    private double weightedAverage(List<Exam> exams, Course course) {
+        TeacherPreference teacherPreference = teacherPreferenceRepository.getOne(course.getTeacher().getId());
+        double sum = 0;
+        int examsNumber = exams.size();
+        for (Exam exam : exams) {
+            if (exam.getExamType().equals(ExamType.TEST)) {
+                sum += exam.getMark() * teacherPreference.getTestWeight();
+            }
+            if (exam.getExamType().equals(ExamType.TOPIC_TEST)) {
+                sum += exam.getMark() * teacherPreference.getTopicTestWeight();
+            }
+            if (exam.getExamType().equals(ExamType.REPETITION)) {
+                sum += exam.getMark() * teacherPreference.getRepetitionWeight();
+            }
+            if (exam.getExamType().equals(ExamType.HOMEWORK)) {
+                sum += exam.getMark() * teacherPreference.getHomeworkWeight();
+            }
+        }
+        return sum / examsNumber;
     }
 }
