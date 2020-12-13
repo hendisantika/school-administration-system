@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.dto.response.RoomResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Room;
 import com.hendisantika.schooladministrationsystem.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,18 @@ public class RoomService {
      */
     public Room findById(Long id) {
         return roomRepository.getOne(id);
+    }
+
+    /**
+     * Creates a new Room and save into the database.
+     *
+     * @param roomResponseDTO Submitted DTO from web application.
+     * @return a new Room object.
+     * @see Room
+     */
+    public Room create(RoomResponseDTO roomResponseDTO) {
+        return roomRepository.save(new Room(
+                roomResponseDTO.getClassroomNumber()
+        ));
     }
 }
