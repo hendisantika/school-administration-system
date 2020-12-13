@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.dto.response.TeacherPreferenceResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.TeacherResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Course;
 import com.hendisantika.schooladministrationsystem.entity.TeacherPreference;
@@ -138,5 +139,20 @@ public class TeacherService {
         Course course = courseRepository.getOne(courseId);
         course.setTeacher(teacher);
         courseRepository.save(course);
+    }
+
+    /**
+     * Set all weights for exam types.
+     *
+     * @param teacherPreferenceResponseDTO Submitted DTO from web application.
+     */
+    public void setTeacherPreferences(TeacherPreferenceResponseDTO teacherPreferenceResponseDTO) {
+        teacherPreferenceRepository.setPreferences(
+                teacherPreferenceResponseDTO.getTeacherId(),
+                teacherPreferenceResponseDTO.getTestWeight(),
+                teacherPreferenceResponseDTO.getTopicTestWeight(),
+                teacherPreferenceResponseDTO.getRepetitionWeight(),
+                teacherPreferenceResponseDTO.getHomeworkWeight()
+        );
     }
 }
