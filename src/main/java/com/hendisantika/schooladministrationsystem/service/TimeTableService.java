@@ -1,5 +1,9 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.dto.response.TimeTableEntityResponseDTO;
+import com.hendisantika.schooladministrationsystem.entity.Classroom;
+import com.hendisantika.schooladministrationsystem.entity.Course;
+import com.hendisantika.schooladministrationsystem.entity.Room;
 import com.hendisantika.schooladministrationsystem.entity.TimeTableEntity;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Teacher;
@@ -102,5 +106,29 @@ public class TimeTableService {
      */
     public TimeTableEntity findById(Long id) {
         return timeTableRepository.getOne(id);
+    }
+
+    /**
+     * Creates a new TimeTableEntity and save into the database.
+     *
+     * @param timeTableEntityResponseDTO Submitted DTO from web application.
+     * @return a new TimeTableEntity object.
+     * @see TimeTableEntity
+     */
+    public TimeTableEntity create(TimeTableEntityResponseDTO timeTableEntityResponseDTO) {
+        /* Finds classroom by id. */
+        Classroom classroom = classroomRepository.getOne(timeTableEntityResponseDTO.getClassroomId());
+        /* Finds course by id. */
+        Course course = courseRepository.getOne(timeTableEntityResponseDTO.getCourseId());
+        /* Finds room by id. */
+        Room room = roomRepository.getOne(timeTableEntityResponseDTO.getRoomId());
+
+        return timeTableRepository.save(new TimeTableEntity(
+                timeTableEntityResponseDTO.getDay(),
+                timeTableEntityResponseDTO.getLessonNumber(),
+                room,
+                course,
+                classroom
+        ));
     }
 }
