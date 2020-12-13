@@ -1,5 +1,9 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.dto.response.TeacherResponseDTO;
+import com.hendisantika.schooladministrationsystem.entity.TeacherPreference;
+import com.hendisantika.schooladministrationsystem.entity.user.Authority;
+import com.hendisantika.schooladministrationsystem.entity.user.User;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Teacher;
 import com.hendisantika.schooladministrationsystem.repository.CourseRepository;
 import com.hendisantika.schooladministrationsystem.repository.TeacherPreferenceRepository;
@@ -75,5 +79,25 @@ public class TeacherService {
                         .getId().equals(userId))
                 .findAny()
                 .orElse(null);
+    }
+
+    /**
+     * Creates a new teacher and save into the database.
+     *
+     * @param teacherResponseDTO Submitted DTO from web application.
+     * @return a new Teacher object.
+     * @see Teacher
+     */
+    public Teacher create(TeacherResponseDTO teacherResponseDTO) {
+        User user = userRepository.findByUsername(teacherResponseDTO.getUsername());
+        Teacher teacher = new Teacher();
+        teacher.setEmail(teacherResponseDTO.getEmail());
+        teacher.setPhone(teacherResponseDTO.getPhone());
+        List<Authority> authorities = authService.findByName("ROLE_TEACHER");
+        user.setAuthorities(authorities);
+        teacher.setTeacher(user);
+        teacherRepository.save(teacher);
+        teacherPreferenceRepository.save(new TeacherPreference(teacher, 1, 1, 1, 1));
+        return teacher;
     }
 }
