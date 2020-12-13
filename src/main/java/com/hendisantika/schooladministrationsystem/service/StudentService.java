@@ -120,4 +120,31 @@ public class StudentService {
         studentRepository.save(student);
         return student;
     }
+
+    /**
+     * Updates a student from database by id.
+     *
+     * @param id                 Id of the student.
+     * @param studentResponseDTO Submitted DTO from web application.
+     * @return an updated student.
+     * @see Student
+     */
+    public Student update(Long id, StudentResponseDTO studentResponseDTO) {
+        Classroom classroom = classroomRepository.getOne(studentResponseDTO.getClassroomId());
+        Student student = studentRepository.getOne(id);
+
+        student.setAddress(studentResponseDTO.getAddress());
+        student.setClassroom(classroom);
+        student.setDateOfBirth(studentResponseDTO.getDateOfBirth());
+        student.setGender(Gender.valueOf(studentResponseDTO.getGender()));
+        student.setEducationId(studentResponseDTO.getEducationId());
+        student.setHealthCareId(studentResponseDTO.getHealthCareId());
+        student.setStart_year(studentResponseDTO.getStartYear());
+        student.setParent1Name(studentResponseDTO.getParent1Name());
+        student.setParent2Name(studentResponseDTO.getParent2Name());
+        student.setParent1Phone(studentResponseDTO.getParent1Phone());
+        student.setParent2Phone(studentResponseDTO.getParent2Phone());
+
+        return studentRepository.save(student);
+    }
 }
