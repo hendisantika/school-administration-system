@@ -39,4 +39,16 @@ public class RemarkService {
                 .filter(remark -> remark.getStudent().getId().equals(student_id))
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Returns a Remark object by id, if course exist
+     * or returns a null value.
+     *
+     * @param id Id of the Remark.
+     * @return a Remark object by id.
+     * @see Remark
+     */
+    public Remark findById(Long id) {
+        return remarkRepository.getOne(id);
+    }
 }
