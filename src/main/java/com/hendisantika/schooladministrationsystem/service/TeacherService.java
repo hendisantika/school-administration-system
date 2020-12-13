@@ -100,4 +100,20 @@ public class TeacherService {
         teacherPreferenceRepository.save(new TeacherPreference(teacher, 1, 1, 1, 1));
         return teacher;
     }
+
+    /**
+     * Updates a teacher from database by id.
+     *
+     * @param id                 Id of the teacher.
+     * @param teacherResponseDTO Submitted DTO from web application.
+     * @return an updated teacher.
+     * @see Teacher
+     */
+    public Teacher update(Long id, TeacherResponseDTO teacherResponseDTO) {
+        Teacher teacher = teacherRepository.getOne(id);
+        teacher.setEmail(teacherResponseDTO.getEmail());
+        teacher.setPhone(teacherResponseDTO.getPhone());
+
+        return teacherRepository.save(teacher);
+    }
 }
