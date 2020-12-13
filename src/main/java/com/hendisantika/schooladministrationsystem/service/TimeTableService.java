@@ -203,4 +203,21 @@ public class TimeTableService {
         }
         return result;
     }
+
+    /**
+     * Returns a List of Courses that Teacher has.
+     *
+     * @param id Id of the Teacher.
+     * @return List of course.
+     */
+    private List<Course> getCourseByTeacher(Long id) {
+        List<Course> result = new ArrayList<>();
+        for (Course course : courseRepository.findAll()) {
+            if (course.getTeacher().getId().equals(id)) {
+                result.add(course);
+            }
+        }
+        return result;
+    }
+
 }
