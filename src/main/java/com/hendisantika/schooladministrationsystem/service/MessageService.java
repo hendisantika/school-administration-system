@@ -34,4 +34,16 @@ public class MessageService {
                 .sorted(Comparator.comparing(Message::getCreatedAt).reversed())
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Returns a Message object by id, if course exist
+     * or returns a null value.
+     *
+     * @param id Id of the message.
+     * @return a message object by id.
+     * @see Message
+     */
+    public Message findById(Long id) {
+        return messageRepository.getOne(id);
+    }
 }
