@@ -44,4 +44,17 @@ public class TeacherService {
     public List<Teacher> findAll() {
         return teacherRepository.findAll();
     }
+
+    /**
+     * Returns a Teacher object by id, if teacher exist
+     * or returns a null value.
+     *
+     * @param id Id of the teacher.
+     * @return a teacher object by id.
+     * @see Teacher
+     */
+    public Teacher findById(Long id) {
+        return teacherRepository
+                .findById(id).orElse(null);
+    }
 }
