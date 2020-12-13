@@ -147,4 +147,14 @@ public class StudentService {
 
         return studentRepository.save(student);
     }
+
+    /**
+     * Deletes a student from database by id.
+     *
+     * @param id Id of the student.
+     */
+    public void delete(Long id) {
+        deleteStudentData(id);
+        studentRepository.deleteById(id);
+    }
 }
