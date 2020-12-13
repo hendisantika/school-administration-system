@@ -68,4 +68,18 @@ public class RemarkService {
                 remarkResponseDTO.getText(),
                 student));
     }
+
+    /**
+     * Updates a remark from database by id.
+     *
+     * @param id                Id of the remark.
+     * @param remarkResponseDTO Submitted DTO from web application.
+     * @return an updated remark.
+     * @see Remark
+     */
+    public Remark update(Long id, RemarkResponseDTO remarkResponseDTO) {
+        Remark remark = remarkRepository.getOne(id);
+        remark.setText(remarkResponseDTO.getText());
+        return remarkRepository.save(remark);
+    }
 }
