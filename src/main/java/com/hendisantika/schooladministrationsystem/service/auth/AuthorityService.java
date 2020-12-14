@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.service.auth;
 
+import com.hendisantika.schooladministrationsystem.entity.user.UserRoleName;
 import com.hendisantika.schooladministrationsystem.repository.user.AuthorityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,4 +18,8 @@ import org.springframework.stereotype.Service;
 public class AuthorityService {
     @Autowired
     private AuthorityRepository authorityRepository;
+
+    public void save(UserRoleName userRoleName) {
+        authorityRepository.saveAuth(userRoleName.toString());
+    }
 }
