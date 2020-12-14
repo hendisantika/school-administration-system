@@ -130,4 +130,31 @@ public class ReportService {
         }
         return reportDTOS;
     }
+
+    /**
+     * Creates a new reports and save into the database.
+     *
+     * @param reportResponseDTOS Submitted DTOs from web application.
+     * @return a new Report objects.
+     * @see Report
+     */
+    public List<Report> createReportsToClassroom(List<ReportResponseDTO> reportResponseDTOS) {
+        List<Report> reports = new ArrayList<>();
+        for (ReportResponseDTO reportResponseDTO : reportResponseDTOS) {
+            /* Finds student by id. */
+            Student student = studentRepository.getOne(reportResponseDTO.getStudentId());
+            /* Finds course by id. */
+            Course course = courseRepository.getOne(reportResponseDTO.getCourseId());
+            Report report = new Report(
+                    student,
+                    reportResponseDTO.getYear(),
+                    reportResponseDTO.getSemester(),
+                    course,
+                    reportResponseDTO.getMark()
+            );
+            reports.add(report);
+            reportRepository.save(report);
+        }
+        return reports;
+    }
 }
