@@ -1,8 +1,11 @@
 package com.hendisantika.schooladministrationsystem.config;
 
+import com.hendisantika.schooladministrationsystem.dto.response.UserResponseDTO;
+import com.hendisantika.schooladministrationsystem.entity.user.UserRoleName;
 import com.hendisantika.schooladministrationsystem.service.*;
 import com.hendisantika.schooladministrationsystem.service.auth.AuthorityService;
 import com.hendisantika.schooladministrationsystem.service.auth.UserService;
+import org.pmw.tinylog.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,4 +52,19 @@ public class InitData {
 
     @Autowired
     private RoomService roomService;
+
+    public void init() {
+        String username = "admin";
+        String password = "admin";
+        if (userService.findAll().isEmpty()) {
+            authorityService.save(UserRoleName.ROLE_ADMIN);
+            authorityService.save(UserRoleName.ROLE_STUDENT);
+            authorityService.save(UserRoleName.ROLE_TEACHER);
+            authorityService.save(UserRoleName.ROLE_HEADTEACHER);
+            userService.save(new UserResponseDTO(username, password, "admin", "ROLE_ADMIN"));
+            Logger.info("Username: {0}\nPassword: {1}", username, password);
+        }
+        //testData();
+    }
+
 }

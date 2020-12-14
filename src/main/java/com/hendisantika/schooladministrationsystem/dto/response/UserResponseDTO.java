@@ -26,4 +26,11 @@ public class UserResponseDTO {
     private String fullName;
 
     private String role;
+
+    public UserResponseDTO(String username, String password, String fullName, String role) {
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.role = role;
+    }
 }
