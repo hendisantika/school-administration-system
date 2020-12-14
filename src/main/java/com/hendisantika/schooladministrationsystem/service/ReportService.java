@@ -103,4 +103,13 @@ public class ReportService {
 
         return reportRepository.save(report);
     }
+
+    /**
+     * Deletes a report from database by id.
+     *
+     * @param id Id of the report.
+     */
+    public void delete(Long id) {
+        reportRepository.delete(reportRepository.getOne(id));
+    }
 }
