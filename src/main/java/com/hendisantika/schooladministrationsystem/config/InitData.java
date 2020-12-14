@@ -1,10 +1,14 @@
 package com.hendisantika.schooladministrationsystem.config;
 
+import com.hendisantika.schooladministrationsystem.dto.ExamDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.ClassroomResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.CourseResponseDTO;
+import com.hendisantika.schooladministrationsystem.dto.response.ExamResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.StudentResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.TeacherResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.UserResponseDTO;
+import com.hendisantika.schooladministrationsystem.entity.Course;
+import com.hendisantika.schooladministrationsystem.entity.ExamType;
 import com.hendisantika.schooladministrationsystem.entity.user.UserRoleName;
 import com.hendisantika.schooladministrationsystem.service.*;
 import com.hendisantika.schooladministrationsystem.service.auth.AuthorityService;
@@ -224,6 +228,38 @@ public class InitData {
             for (long j = 1L; j < 12L; j++) {
                 classroomService.setCourse(i, j);
             }
+        }
+    }
+
+    private void testDataExam() {
+        List<Course> courses = courseService.findAll();
+        List<ExamType> examTypes = examService.getAllExamType();
+        Random random = new Random();
+
+        for (int i = 0; i < 40; i++) {
+            int randYear = random.nextInt(2) + 2025;
+            int randMonth = randYear == 2025 ? random.nextInt(4) + 9
+                    : random.nextInt(6) + 1;
+            int randDay = random.nextInt(28) + 1;
+            Long classroom_id = i % 2 == 0 ? 1L : 2L;
+            Course course = courses.get(random.nextInt(courses.size()));
+            List<ExamDTO> examDTOS = examService.makeExamsFormToClassroom(
+                    classroom_id,
+                    LocalDate.of(randYear, randMonth, randDay), ""
+            );
+            List<ExamResponseDTO> examResponseDTOS = new ArrayList<>();
+
+            for (ExamDTO examDTO : examDTOS) {
+                int mark = random.nextInt(5) + 1;
+                examResponseDTOS.add(new ExamResponseDTO(
+                        mark,
+                        examDTO.getWrittenAt(),
+                        examTypes.get(random.nextInt(examTypes.size())).toString(),
+                        course.getId(),
+                        examDTO.getStudent().getId()
+                ));
+            }
+            examService.createExamsFromForm(examResponseDTOS);
         }
     }
 }
