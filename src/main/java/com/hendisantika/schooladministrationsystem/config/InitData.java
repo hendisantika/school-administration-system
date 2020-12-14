@@ -1,6 +1,7 @@
 package com.hendisantika.schooladministrationsystem.config;
 
 import com.hendisantika.schooladministrationsystem.dto.response.ClassroomResponseDTO;
+import com.hendisantika.schooladministrationsystem.dto.response.CourseResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.StudentResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.TeacherResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.UserResponseDTO;
@@ -160,5 +161,69 @@ public class InitData {
                 'b',
                 3L
         ));
+    }
+
+    private void testDataCourse() {
+        courseService.create(new CourseResponseDTO(
+                "Irodalom",
+                9,
+                1L
+        ));
+        courseService.create(new CourseResponseDTO(
+                "Nyelvtan",
+                9,
+                2L
+        ));
+        courseService.create(new CourseResponseDTO(
+                "Matematika",
+                9,
+                3L
+        ));
+        courseService.create(new CourseResponseDTO(
+                "Történelem",
+                9,
+                4L
+        ));
+        courseService.create(new CourseResponseDTO(
+                "Testnevelés",
+                9,
+                5L
+        ));
+        courseService.create(new CourseResponseDTO(
+                "Angol",
+                9,
+                6L
+        ));
+        courseService.create(new CourseResponseDTO(
+                "Kémia",
+                9,
+                7L
+        ));
+        courseService.create(new CourseResponseDTO(
+                "Biológia",
+                9,
+                7L
+        ));
+        courseService.create(new CourseResponseDTO(
+                "Fizika",
+                9,
+                8L
+        ));
+        courseService.create(new CourseResponseDTO(
+                "Informatika",
+                9,
+                9L
+        ));
+        courseService.create(new CourseResponseDTO(
+                "Földrajz",
+                9,
+                10L
+        ));
+
+        for (Long i = 1L; i < 3L; i++) {
+            for (long j = 1L; j < 12L; j++) {
+                classroomService.setCourse(i, j);
+            }
+        }
     }
 }
