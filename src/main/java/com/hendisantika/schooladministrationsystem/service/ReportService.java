@@ -82,4 +82,25 @@ public class ReportService {
                 reportResponseDTO.getMark()
         ));
     }
+
+    /**
+     * Updates a report from database by id.
+     *
+     * @param id                Id of the report.
+     * @param reportResponseDTO Submitted DTO from web application.
+     * @return an updated report.
+     * @see Report
+     */
+    public Report update(Long id, ReportResponseDTO reportResponseDTO) {
+        /* Finds report by id. */
+        Report report = reportRepository.getOne(id);
+        /* Finds course by id. */
+        Course course = courseRepository.getOne(reportResponseDTO.getCourseId());
+        report.setMark(reportResponseDTO.getMark());
+        report.setSemester(reportResponseDTO.getSemester());
+        report.setYear(reportResponseDTO.getYear());
+        report.setCourse(course);
+
+        return reportRepository.save(report);
+    }
 }
