@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.config;
 
+import com.hendisantika.schooladministrationsystem.dto.response.StudentResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.UserResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.user.UserRoleName;
 import com.hendisantika.schooladministrationsystem.service.*;
@@ -8,6 +9,11 @@ import com.hendisantika.schooladministrationsystem.service.auth.UserService;
 import org.pmw.tinylog.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by IntelliJ IDEA.
@@ -79,4 +85,39 @@ public class InitData {
         testDataReport();
     }
 
+    private void testDataStudent() {
+        List<String> usernames = new ArrayList<>();
+        for (int i = 1; i < 21; i++) {
+            UserResponseDTO userResponseDTO = new UserResponseDTO(
+                    "student" + i,
+                    "student",
+                    "student" + i + "'s fullname",
+                    "ROLE_STUDENT"
+            );
+            userService.save(userResponseDTO);
+            usernames.add(userResponseDTO.getUsername());
+        }
+
+        for (String username : usernames) {
+            Random random = new Random();
+            int randYear = random.nextInt(2) + 2010;
+            int randMonth = random.nextInt(12) + 1;
+            int randDay = random.nextInt(28) + 1;
+            int randHealthCare = random.nextInt(900) + 100;
+            studentService.create(new StudentResponseDTO(
+                    username,
+                    LocalDate.of(randYear, randMonth, randDay),
+                    2015,
+                    username + "' address",
+                    "FEMALE",
+                    random.nextInt(100000) + 900000 + "",
+                    randHealthCare + "/" + randHealthCare + "/" + randHealthCare,
+                    "Parent 1 name",
+                    "Parent 2 name",
+                    "+36 00 000 0000",
+                    "+36 00 000 0000",
+                    (long) (random.nextInt(2) + 1)
+            ));
+        }
+    }
 }
