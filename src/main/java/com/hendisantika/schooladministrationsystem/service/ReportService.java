@@ -48,4 +48,14 @@ public class ReportService {
                         && report.getSemester() == semester)
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Returns a Report object by id.
+     *
+     * @param id Id of the Course.
+     * @return a report object.
+     */
+    public Report findById(Long id) {
+        return reportRepository.getOne(id);
+    }
 }
