@@ -4,12 +4,14 @@ import com.hendisantika.schooladministrationsystem.dto.ExamDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.ClassroomResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.CourseResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.ExamResponseDTO;
+import com.hendisantika.schooladministrationsystem.dto.response.ReportResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.StudentResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.TeacherResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.UserResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Course;
 import com.hendisantika.schooladministrationsystem.entity.ExamType;
 import com.hendisantika.schooladministrationsystem.entity.user.UserRoleName;
+import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.service.*;
 import com.hendisantika.schooladministrationsystem.service.auth.AuthorityService;
 import com.hendisantika.schooladministrationsystem.service.auth.UserService;
@@ -262,4 +264,37 @@ public class InitData {
             examService.createExamsFromForm(examResponseDTOS);
         }
     }
+
+    private void testDataReport() {
+        List<Course> courses = courseService.findAll();
+        List<Student> students = studentService.findAll();
+        Random random = new Random();
+
+        for (Student student : students) {
+            for (Course course : courses) {
+                int mark = random.nextInt(5) + 1;
+                reportService.create(new ReportResponseDTO(
+                        9,
+                        1,
+                        mark,
+                        student.getId(),
+                        course.getId()
+
+                ));
+            }
+        }
+        for (Student student : students) {
+            for (Course course : courses) {
+                int mark = random.nextInt(5) + 1;
+                reportService.create(new ReportResponseDTO(
+                        9,
+                        2,
+                        mark,
+                        student.getId(),
+                        course.getId()
+                ));
+            }
+        }
+    }
+
 }
