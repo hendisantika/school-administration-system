@@ -1,6 +1,8 @@
 package com.hendisantika.schooladministrationsystem.config;
 
+import com.hendisantika.schooladministrationsystem.dto.AttendanceDTO;
 import com.hendisantika.schooladministrationsystem.dto.ExamDTO;
+import com.hendisantika.schooladministrationsystem.dto.response.AttendanceResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.ClassroomResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.CourseResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.ExamResponseDTO;
@@ -294,6 +296,33 @@ public class InitData {
                         course.getId()
                 ));
             }
+        }
+    }
+
+    private void testDataAttendance() {
+        Random random = new Random();
+        for (int i = 0; i < 30; i++) {
+            int randLecture = random.nextInt(12) + 1;
+            int randYear = random.nextInt(2) + 2025;
+            int randMonth = randYear == 2025 ? random.nextInt(4) + 9
+                    : random.nextInt(6) + 1;
+            int randDay = random.nextInt(28) + 1;
+
+            Long classroomId = i % 2 == 0 ? 1L : 2L;
+            List<AttendanceDTO> attendanceDTOS = attendanceService.makeAttendanceFormToClassroom(classroomId);
+            List<AttendanceResponseDTO> attendanceResponseDTOS = new ArrayList<>();
+            for (AttendanceDTO attendanceDTO : attendanceDTOS) {
+                boolean randMiss = random.nextBoolean();
+                AttendanceResponseDTO attendance = new AttendanceResponseDTO(
+                        attendanceDTO.getStudent().getId(),
+                        randMiss,
+                        randLecture,
+                        LocalDate.of(randYear, randMonth, randDay)
+                );
+                attendanceResponseDTOS.add(attendance);
+
+            }
+            attendanceService.create(attendanceResponseDTOS);
         }
     }
 
