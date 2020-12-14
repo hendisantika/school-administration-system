@@ -62,4 +62,10 @@ public class UserService {
             throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
+
+    public String delete(Long userId) {
+        User user = userRepository.getOne(userId);
+        userRepository.delete(user);
+        return userId.toString();
+    }
 }
