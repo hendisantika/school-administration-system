@@ -1,6 +1,9 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.dto.response.ReportResponseDTO;
+import com.hendisantika.schooladministrationsystem.entity.Course;
 import com.hendisantika.schooladministrationsystem.entity.Report;
+import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.repository.CourseRepository;
 import com.hendisantika.schooladministrationsystem.repository.ReportRepository;
 import com.hendisantika.schooladministrationsystem.repository.user.StudentRepository;
@@ -57,5 +60,26 @@ public class ReportService {
      */
     public Report findById(Long id) {
         return reportRepository.getOne(id);
+    }
+
+    /**
+     * Creates a new report and save into the database.
+     *
+     * @param reportResponseDTO Submitted DTO from web application.
+     * @return a new Report object.
+     * @see Report
+     */
+    public Report create(ReportResponseDTO reportResponseDTO) {
+        /* Finds student by id. */
+        Student student = studentRepository.getOne(reportResponseDTO.getStudentId());
+        /* Finds course by id. */
+        Course course = courseRepository.getOne(reportResponseDTO.getCourseId());
+        return reportRepository.save(new Report(
+                student,
+                reportResponseDTO.getYear(),
+                reportResponseDTO.getSemester(),
+                course,
+                reportResponseDTO.getMark()
+        ));
     }
 }
