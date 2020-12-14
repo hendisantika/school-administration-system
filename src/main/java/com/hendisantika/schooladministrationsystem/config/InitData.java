@@ -2,14 +2,7 @@ package com.hendisantika.schooladministrationsystem.config;
 
 import com.hendisantika.schooladministrationsystem.dto.AttendanceDTO;
 import com.hendisantika.schooladministrationsystem.dto.ExamDTO;
-import com.hendisantika.schooladministrationsystem.dto.response.AttendanceResponseDTO;
-import com.hendisantika.schooladministrationsystem.dto.response.ClassroomResponseDTO;
-import com.hendisantika.schooladministrationsystem.dto.response.CourseResponseDTO;
-import com.hendisantika.schooladministrationsystem.dto.response.ExamResponseDTO;
-import com.hendisantika.schooladministrationsystem.dto.response.ReportResponseDTO;
-import com.hendisantika.schooladministrationsystem.dto.response.StudentResponseDTO;
-import com.hendisantika.schooladministrationsystem.dto.response.TeacherResponseDTO;
-import com.hendisantika.schooladministrationsystem.dto.response.UserResponseDTO;
+import com.hendisantika.schooladministrationsystem.dto.response.*;
 import com.hendisantika.schooladministrationsystem.entity.Course;
 import com.hendisantika.schooladministrationsystem.entity.ExamType;
 import com.hendisantika.schooladministrationsystem.entity.user.UserRoleName;
@@ -323,6 +316,14 @@ public class InitData {
 
             }
             attendanceService.create(attendanceResponseDTOS);
+        }
+    }
+
+    private void testDataRoom() {
+        for (int i = 1; i < 3; i++) {
+            for (int j = 1; j < 10; j++) {
+                roomService.create(new RoomResponseDTO(i + "/" + j + " terem"));
+            }
         }
     }
 
