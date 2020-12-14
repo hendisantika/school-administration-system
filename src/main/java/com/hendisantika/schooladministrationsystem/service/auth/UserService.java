@@ -68,4 +68,8 @@ public class UserService {
         userRepository.delete(user);
         return userId.toString();
     }
+
+    public boolean isUsernameUnique(String username) {
+        return !userRepository.existsByUsername(username);
+    }
 }
