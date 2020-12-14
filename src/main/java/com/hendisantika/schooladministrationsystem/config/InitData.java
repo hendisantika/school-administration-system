@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.config;
 
+import com.hendisantika.schooladministrationsystem.dto.response.ClassroomResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.StudentResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.TeacherResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.UserResponseDTO;
@@ -142,5 +143,22 @@ public class InitData {
                     "+36 00 000 0000"
             ));
         }
+    }
+
+    private void testDataClassroom() {
+        classroomService.create(new ClassroomResponseDTO(
+                2025,
+                2028,
+                9,
+                'a',
+                2L
+        ));
+        classroomService.create(new ClassroomResponseDTO(
+                2025,
+                2028,
+                9,
+                'b',
+                3L
+        ));
     }
 }
