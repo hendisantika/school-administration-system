@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.service;
 
+import com.hendisantika.schooladministrationsystem.dto.ReportDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.ReportResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Course;
 import com.hendisantika.schooladministrationsystem.entity.Report;
@@ -10,6 +11,7 @@ import com.hendisantika.schooladministrationsystem.repository.user.StudentReposi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -111,5 +113,21 @@ public class ReportService {
      */
     public void delete(Long id) {
         reportRepository.delete(reportRepository.getOne(id));
+    }
+
+    /**
+     * Returns a form that contains a list of students
+     * and mark field for each student.
+     *
+     * @param classroomId Id of the classroom.
+     * @return A form table to create reports to all student in classroom.
+     */
+    public List<ReportDTO> makeReportFormToClassroom(Long classroomId) {
+        List<Student> students = getStudentFromClassroom(classroomId);
+        List<ReportDTO> reportDTOS = new ArrayList<>();
+        for (Student student : students) {
+            reportDTOS.add(new ReportDTO(student));
+        }
+        return reportDTOS;
     }
 }
