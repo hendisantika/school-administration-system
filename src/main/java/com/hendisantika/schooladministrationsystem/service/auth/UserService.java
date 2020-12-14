@@ -72,4 +72,10 @@ public class UserService {
     public boolean isUsernameUnique(String username) {
         return !userRepository.existsByUsername(username);
     }
+
+    public void resetCredentials(String username) {
+        User user = userRepository.findByUsername(username);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+    }
 }
