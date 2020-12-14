@@ -41,4 +41,13 @@ public class AuthorityService {
         authorities.add(authority);
         return authorities;
     }
+
+    private Authority getAuthority(String name) {
+        for (Authority authority : authorityRepository.findAll()) {
+            if (authority.getAuthority().equals(name)) {
+                return authority;
+            }
+        }
+        return null;
+    }
 }
