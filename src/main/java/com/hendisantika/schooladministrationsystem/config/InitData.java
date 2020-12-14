@@ -5,6 +5,7 @@ import com.hendisantika.schooladministrationsystem.dto.ExamDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.*;
 import com.hendisantika.schooladministrationsystem.entity.Course;
 import com.hendisantika.schooladministrationsystem.entity.ExamType;
+import com.hendisantika.schooladministrationsystem.entity.Room;
 import com.hendisantika.schooladministrationsystem.entity.user.UserRoleName;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.service.*;
@@ -323,6 +324,43 @@ public class InitData {
         for (int i = 1; i < 3; i++) {
             for (int j = 1; j < 10; j++) {
                 roomService.create(new RoomResponseDTO(i + "/" + j + " terem"));
+            }
+        }
+    }
+
+    private void testDataTimeTable() {
+        List<Course> courses = courseService.findAll();
+        TimeTableEntityResponseDTO[][] timeTableEntityResponseDTOS =
+                new TimeTableEntityResponseDTO[12][5];
+        List<Room> rooms = roomService.findAll();
+        Random random = new Random();
+
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 5; j++) {
+                timeTableEntityResponseDTOS[i][j] = new TimeTableEntityResponseDTO();
+                Course course = courses.get(random.nextInt(courses.size()));
+                timeTableEntityResponseDTOS[i][j].setClassroomId(1L);
+                timeTableEntityResponseDTOS[i][j].setCourseId(course.getId());
+                timeTableEntityResponseDTOS[i][j].setRoomId(
+                        rooms.get(random.nextInt(rooms.size())).getId()
+                );
+                timeTableEntityResponseDTOS[i][j].setDay(j);
+                timeTableEntityResponseDTOS[i][j].setLessonNumber(i);
+                timeTableService.create(timeTableEntityResponseDTOS[i][j]);
+            }
+        }
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 5; j++) {
+                timeTableEntityResponseDTOS[i][j] = new TimeTableEntityResponseDTO();
+                Course course = courses.get(random.nextInt(courses.size()));
+                timeTableEntityResponseDTOS[i][j].setClassroomId(2L);
+                timeTableEntityResponseDTOS[i][j].setCourseId(course.getId());
+                timeTableEntityResponseDTOS[i][j].setRoomId(
+                        rooms.get(random.nextInt(rooms.size())).getId()
+                );
+                timeTableEntityResponseDTOS[i][j].setDay(j);
+                timeTableEntityResponseDTOS[i][j].setLessonNumber(i);
+                timeTableService.create(timeTableEntityResponseDTOS[i][j]);
             }
         }
     }
