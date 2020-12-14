@@ -78,4 +78,9 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
+
+    public User findById(Long id) {
+        return userRepository
+                .findById(id).orElse(null);
+    }
 }
