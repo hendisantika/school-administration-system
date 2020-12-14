@@ -34,4 +34,11 @@ public class AuthorityService {
         authorities.add(authority);
         return authorities;
     }
+
+    public List<Authority> findByName(String name) {
+        Authority authority = getAuthority(name);
+        List<Authority> authorities = new ArrayList<>();
+        authorities.add(authority);
+        return authorities;
+    }
 }
