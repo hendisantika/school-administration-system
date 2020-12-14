@@ -46,4 +46,20 @@ public class UserService {
             throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
+
+    public User update(Long id, UserResponseDTO userResponseDTO) {
+        User user = userRepository.getOne(id);
+
+        if (!userRepository.existsByUsername(userResponseDTO.getUsername())) {
+            user.setUsername(userResponseDTO.getUsername());
+            if (userResponseDTO.getPassword() != null) {
+                user.setPassword(passwordEncoder.encode(userResponseDTO.getPassword()));
+            }
+            user.setFullName(userResponseDTO.getFullName());
+            userRepository.save(user);
+            return user;
+        } else {
+            throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
 }
