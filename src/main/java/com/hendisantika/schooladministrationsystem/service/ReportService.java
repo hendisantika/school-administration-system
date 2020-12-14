@@ -157,4 +157,18 @@ public class ReportService {
         }
         return reports;
     }
+
+    /**
+     * Returns a List of Students, who are in the class.
+     *
+     * @param classroomId Id of the classroom.
+     * @return List of students.
+     */
+    private List<Student> getStudentFromClassroom(Long classroomId) {
+        return studentRepository
+                .findAll()
+                .stream()
+                .filter(student -> student.getClassroom().getId().equals(classroomId))
+                .collect(Collectors.toList());
+    }
 }
