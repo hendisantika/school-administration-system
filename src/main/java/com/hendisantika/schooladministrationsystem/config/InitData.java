@@ -1,6 +1,7 @@
 package com.hendisantika.schooladministrationsystem.config;
 
 import com.hendisantika.schooladministrationsystem.dto.response.StudentResponseDTO;
+import com.hendisantika.schooladministrationsystem.dto.response.TeacherResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.UserResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.user.UserRoleName;
 import com.hendisantika.schooladministrationsystem.service.*;
@@ -117,6 +118,28 @@ public class InitData {
                     "+36 00 000 0000",
                     "+36 00 000 0000",
                     (long) (random.nextInt(2) + 1)
+            ));
+        }
+    }
+
+    private void testDataTeacher() {
+        List<String> usernames = new ArrayList<>();
+        for (int i = 1; i < 11; i++) {
+            UserResponseDTO userResponseDTO = new UserResponseDTO(
+                    "teacher" + i,
+                    "teacher",
+                    "teacher" + i + "'s fullname",
+                    "ROLE_TEACHER"
+            );
+            userService.save(userResponseDTO);
+            usernames.add(userResponseDTO.getUsername());
+        }
+
+        for (String username : usernames) {
+            teacherService.create(new TeacherResponseDTO(
+                    username,
+                    username + "@school.com",
+                    "+36 00 000 0000"
             ));
         }
     }
