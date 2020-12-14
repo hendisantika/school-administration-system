@@ -67,4 +67,16 @@ public class InitData {
         //testData();
     }
 
+    private void testData() {
+        testDataTeacher();
+        testDataClassroom();
+        testDataStudent();
+        testDataCourse();
+        testDataRoom();
+        testDataTimeTable();
+        testDataAttendance();
+        testDataExam();
+        testDataReport();
+    }
+
 }
