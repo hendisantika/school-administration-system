@@ -1,6 +1,7 @@
 package com.hendisantika.schooladministrationsystem.security;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,6 +42,16 @@ public class TokenHelper {
             username = null;
         }
         return username;
+    }
+
+    public String generateToken(String username) {
+        return Jwts.builder()
+                .setIssuer(APP_NAME)
+                .setSubject(username)
+                .setIssuedAt(generateCurrentDate())
+                .setExpiration(generateExpirationDate())
+                .signWith(SIGNATURE_ALGORITHM, SECRET)
+                .compact();
     }
 
 }
