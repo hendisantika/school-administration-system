@@ -111,5 +111,8 @@ public class TokenHelper {
                 .toEpochMilli();
     }
 
+    private Date generateCurrentDate() {
+        return new Date(getCurrentTimeMillis());
+    }
 
 }
