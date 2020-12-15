@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : school-administration-system
@@ -67,5 +69,12 @@ public class TokenHelper {
         return claims;
     }
 
+    String generateToken(Map<String, Object> claims) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setExpiration(generateExpirationDate())
+                .signWith(SIGNATURE_ALGORITHM, SECRET)
+                .compact();
+    }
 
 }
