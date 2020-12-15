@@ -133,4 +133,16 @@ public class TokenHelper {
         }
         return null;
     }
+
+    public Cookie getCookieValueByName(HttpServletRequest request, String name) {
+        if (request.getCookies() == null) {
+            return null;
+        }
+        for (int i = 0; i < request.getCookies().length; i++) {
+            if (request.getCookies()[i].getName().equals(name)) {
+                return request.getCookies()[i];
+            }
+        }
+        return null;
+    }
 }
