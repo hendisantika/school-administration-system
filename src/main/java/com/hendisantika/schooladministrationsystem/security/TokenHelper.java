@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -119,4 +121,16 @@ public class TokenHelper {
         return new Date(getCurrentTimeMillis() + this.EXPIRES_IN * 1000);
     }
 
+    public String getToken(HttpServletRequest request) {
+        Cookie authCookie = getCookieValueByName(request, AUTH_COOKIE);
+        if (authCookie != null) {
+            return authCookie.getValue();
+        }
+
+        String authHeader = request.getHeader(AUTH_HEADER);
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
+        }
+        return null;
+    }
 }
