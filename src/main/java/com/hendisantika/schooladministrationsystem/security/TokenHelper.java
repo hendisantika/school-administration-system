@@ -54,4 +54,18 @@ public class TokenHelper {
                 .compact();
     }
 
+    private Claims getClaimsFromToken(String token) {
+        Claims claims;
+        try {
+            claims = Jwts.parser()
+                    .setSigningKey(this.SECRET)
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            claims = null;
+        }
+        return claims;
+    }
+
+
 }
