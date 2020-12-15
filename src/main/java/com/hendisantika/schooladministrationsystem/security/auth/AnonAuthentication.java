@@ -31,4 +31,10 @@ public class AnonAuthentication extends AbstractAuthenticationToken {
     public boolean isAuthenticated() {
         return true;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
 }
