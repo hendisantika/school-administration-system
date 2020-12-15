@@ -5,9 +5,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -75,6 +77,17 @@ public class TokenHelper {
                 .setExpiration(generateExpirationDate())
                 .signWith(SIGNATURE_ALGORITHM, SECRET)
                 .compact();
+    }
+
+    public Boolean canTokenBeRefreshed(String token) {
+        try {
+            final Date expirationDate = getClaimsFromToken(token).getExpiration();
+            String username = getUsernameFromToken(token);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            return expirationDate.compareTo(generateCurrentDate()) > 0;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }
