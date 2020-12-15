@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,5 +31,16 @@ public class TokenHelper {
     private String AUTH_COOKIE;
     @Autowired
     private UserDetailsService userDetailsService;
+
+    public String getUsernameFromToken(String token) {
+        String username;
+        try {
+            final Claims claims = this.getClaimsFromToken(token);
+            username = claims.getSubject();
+        } catch (Exception e) {
+            username = null;
+        }
+        return username;
+    }
 
 }
