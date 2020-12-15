@@ -21,4 +21,10 @@ public class AnonAuthentication extends AbstractAuthenticationToken {
     public Object getCredentials() {
         return null;
     }
+
+    @Override
+    public Object getPrincipal() {
+        return null;
+    }
+
 }
