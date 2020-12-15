@@ -27,4 +27,8 @@ public class AnonAuthentication extends AbstractAuthenticationToken {
         return null;
     }
 
+    @Override
+    public boolean isAuthenticated() {
+        return true;
+    }
 }
