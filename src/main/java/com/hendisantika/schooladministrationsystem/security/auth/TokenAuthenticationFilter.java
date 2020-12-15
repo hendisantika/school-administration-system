@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : school-administration-system
@@ -25,4 +28,12 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     TokenHelper tokenHelper;
     @Autowired
     UserDetailsService userDetailsService;
+
+    private final List<String> pathsToSkip = Arrays.asList(
+            ROOT_MATCHER,
+            HTML_MATCHER,
+            CSS_MATCHER,
+            LOGIN_MATCHER,
+            LOGOUT_MATCHER
+    );
 }
