@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.security;
 
+import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.repository.user.StudentRepository;
 import com.hendisantika.schooladministrationsystem.repository.user.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,4 +23,9 @@ public class SecurityService {
 
         @Autowired
         private TeacherRepository teacherRepository;
+
+        public boolean hasStudentAccess(Long currentUserId, Long studentId) {
+                Student student = studentRepository.getOne(studentId);
+                return student.getStudent().getId().equals(currentUserId);
+        }
 }
