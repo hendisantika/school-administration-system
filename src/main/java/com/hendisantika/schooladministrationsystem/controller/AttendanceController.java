@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.controller;
 
+import com.hendisantika.schooladministrationsystem.dto.response.AttendanceResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Attendance;
 import com.hendisantika.schooladministrationsystem.service.AttendanceService;
 import io.swagger.annotations.ApiOperation;
@@ -10,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,5 +45,17 @@ public class AttendanceController {
     @GetMapping(value = "/attendances/all/{studentId}")
     public List<Attendance> getAllByStudent(@PathVariable Long studentId) {
         return attendanceService.getAllByStudent(studentId);
+    }
+
+    @PreAuthorize("hasRole('ROLE_TEACHER') or hasRole('ROLE_HEADTEACHER')")
+    @ApiOperation(value = "${AttendanceController.create}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Attendances cannot created"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @PostMapping(value = "/attendances/create")
+    public List<Attendance> create(@RequestBody List<AttendanceResponseDTO> attendanceResponseDTOS) {
+        return attendanceService.create(attendanceResponseDTOS);
     }
 }
