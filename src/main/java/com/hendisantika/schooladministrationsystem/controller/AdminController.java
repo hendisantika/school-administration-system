@@ -80,4 +80,16 @@ public class AdminController {
         adminService.finished(classroom_id);
         return "Finished";
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ApiOperation(value = "${AdminController.getArchiveByArchiveId}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Archive doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping(value = "/admin/archive/{id}")
+    public Archive getArchiveByArchiveId(@PathVariable Long id) {
+        return adminService.getArchiveById(id);
+    }
 }
