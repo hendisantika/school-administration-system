@@ -9,6 +9,7 @@ import com.hendisantika.schooladministrationsystem.repository.ClassroomRepositor
 import com.hendisantika.schooladministrationsystem.repository.CourseRepository;
 import com.hendisantika.schooladministrationsystem.repository.user.StudentRepository;
 import com.hendisantika.schooladministrationsystem.repository.user.TeacherRepository;
+import com.hendisantika.schooladministrationsystem.service.auth.AuthorityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

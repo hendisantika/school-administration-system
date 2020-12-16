@@ -11,6 +11,7 @@ import com.hendisantika.schooladministrationsystem.repository.CourseRepository;
 import com.hendisantika.schooladministrationsystem.repository.TeacherPreferenceRepository;
 import com.hendisantika.schooladministrationsystem.repository.user.TeacherRepository;
 import com.hendisantika.schooladministrationsystem.repository.user.UserRepository;
+import com.hendisantika.schooladministrationsystem.service.auth.AuthorityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,7 +73,6 @@ public class TeacherService {
      * @return a teacher object by user id.
      * @see Teacher
      */
-    @Override
     public Teacher findByUserId(Long userId) {
         return teacherRepository
                 .findAll()
