@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.controller;
 
+import com.hendisantika.schooladministrationsystem.dto.AttendanceDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.AttendanceResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Attendance;
 import com.hendisantika.schooladministrationsystem.service.AttendanceService;
@@ -94,8 +95,20 @@ public class AttendanceController {
             @ApiResponse(code = 403, message = "Access denied"),
             @ApiResponse(code = 404, message = "Classroom doesn't found"),
             @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
-    @GetMapping(value = "/attendances/classroom/{classroom_id}")
-    public List<Attendance> getAllAttendancesByClassroom(@PathVariable Long classroom_id) {
-        return attendanceService.getAllAttendancesByClassroom(classroom_id);
+    @GetMapping(value = "/attendances/classroom/{classroomId}")
+    public List<Attendance> getAllAttendancesByClassroom(@PathVariable Long classroomId) {
+        return attendanceService.getAllAttendancesByClassroom(classroomId);
+    }
+
+    @PreAuthorize("hasRole('ROLE_TEACHER') or hasRole('ROLE_HEADTEACHER')")
+    @ApiOperation(value = "${AttendanceController.makeAttendanceFormToClassroom}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Classroom doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping(value = "/attendances/{classroomId}")
+    public List<AttendanceDTO> makeAttendanceFormToClassroom(@PathVariable Long classroomId) {
+        return attendanceService.makeAttendanceFormToClassroom(classroomId);
     }
 }
