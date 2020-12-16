@@ -54,11 +54,6 @@ public class Teacher {
     private String phone;
 
     /**
-     * Empty constructor.
-     */
-    public Teacher() {}
-
-    /**
      *  Constructor to make a new instance.
      *
      * @param teacher User object to teacher.

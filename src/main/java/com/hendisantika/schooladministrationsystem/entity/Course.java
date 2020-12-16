@@ -46,11 +46,6 @@ public class Course {
     private int year;
 
     /**
-     * Empty constructor.
-     */
-    public Course() {}
-
-    /**
      * Constructor to make a new instance.
      *
      * @param title Subject title.
