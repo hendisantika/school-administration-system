@@ -39,4 +39,16 @@ public class AdminController {
         adminService.newYear();
         return "Done";
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ApiOperation(value = "${AdminController.createArchive}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "The archive cannot created"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping(value = "/admin/createArchive")
+    public String createArchive() {
+        return adminService.createArchive();
+    }
 }
