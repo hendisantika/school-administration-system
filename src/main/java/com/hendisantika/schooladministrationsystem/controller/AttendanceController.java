@@ -86,4 +86,16 @@ public class AttendanceController {
         attendanceService.verify(id);
         return id.toString();
     }
+
+    @PreAuthorize("hasRole('ROLE_TEACHER') or hasRole('ROLE_HEADTEACHER')")
+    @ApiOperation(value = "${AttendanceController.getAllAttendancesByClassroom}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Classroom doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping(value = "/attendances/classroom/{classroom_id}")
+    public List<Attendance> getAllAttendancesByClassroom(@PathVariable Long classroom_id) {
+        return attendanceService.getAllAttendancesByClassroom(classroom_id);
+    }
 }
