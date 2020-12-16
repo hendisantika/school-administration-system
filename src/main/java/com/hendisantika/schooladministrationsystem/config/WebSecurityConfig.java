@@ -2,6 +2,7 @@ package com.hendisantika.schooladministrationsystem.config;
 
 import com.hendisantika.schooladministrationsystem.security.auth.LogoutSuccess;
 import com.hendisantika.schooladministrationsystem.security.auth.RestAuthenticationEntryPoint;
+import com.hendisantika.schooladministrationsystem.security.auth.TokenAuthenticationFilter;
 import com.hendisantika.schooladministrationsystem.service.auth.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,5 +50,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
+    @Bean
+    public TokenAuthenticationFilter jwtAuthenticationTokenFilter() throws Exception {
+        return new TokenAuthenticationFilter();
+    }
+
 
 }
