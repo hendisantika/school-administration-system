@@ -120,4 +120,18 @@ public class CourseController {
         courseService.setCourse(studentId, courseId);
         return courseId.toString();
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ApiOperation(value = "${CourseController.unsetCourse}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Course or Student doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @PutMapping(value = "/courses/unsetCourse/{studentId}")
+    public String unsetCourse(@PathVariable Long studentId,
+                              @RequestBody Long courseId) {
+        courseService.unsetCourse(studentId, courseId);
+        return courseId.toString();
+    }
 }
