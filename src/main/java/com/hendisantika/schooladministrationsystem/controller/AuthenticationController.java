@@ -1,12 +1,19 @@
 package com.hendisantika.schooladministrationsystem.controller;
 
+import com.hendisantika.schooladministrationsystem.entity.user.UserTokenState;
 import com.hendisantika.schooladministrationsystem.security.TokenHelper;
 import com.hendisantika.schooladministrationsystem.service.auth.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by IntelliJ IDEA.
@@ -30,4 +37,25 @@ public class AuthenticationController {
 
     @Value("${jwt.cookie}")
     private String TOKEN_COOKIE;
+
+    @GetMapping(value = "/refresh")
+    public ResponseEntity<?> refreshAuthenticationToken(HttpServletRequest request, HttpServletResponse response) {
+
+        String authToken = tokenHelper.getToken(request);
+        if (authToken != null && tokenHelper.canTokenBeRefreshed(authToken)) {
+            String refreshedToken = tokenHelper.refreshToken(authToken);
+
+            Cookie authCookie = new Cookie(TOKEN_COOKIE, (refreshedToken));
+            authCookie.setPath("/");
+            authCookie.setHttpOnly(true);
+            authCookie.setMaxAge(EXPIRES_IN);
+            response.addCookie(authCookie);
+
+            UserTokenState userTokenState = new UserTokenState(refreshedToken, EXPIRES_IN);
+            return ResponseEntity.ok(userTokenState);
+        } else {
+            UserTokenState userTokenState = new UserTokenState();
+            return ResponseEntity.accepted().body(userTokenState);
+        }
+    }
 }
