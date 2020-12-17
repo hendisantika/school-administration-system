@@ -114,4 +114,16 @@ public class ExamController {
                                                   @PathVariable String examType) {
         return examService.makeExamsFormToClassroom(classroomId, LocalDate.parse(writtenAt), examType);
     }
+
+    @PreAuthorize("hasRole('ROLE_TEACHER') or hasRole('ROLE_HEADTEACHER')")
+    @ApiOperation(value = "${ExamController.createExamsFromForm}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Exams cannot created"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @PostMapping(value = "/exams/form/create")
+    public List<Exam> createExamsFromForm(@RequestBody List<ExamResponseDTO> examResponseDTOS) {
+        return examService.createExamsFromForm(examResponseDTOS);
+    }
 }
