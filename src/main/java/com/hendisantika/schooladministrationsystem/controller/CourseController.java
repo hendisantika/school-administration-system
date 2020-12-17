@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -91,5 +92,18 @@ public class CourseController {
     public Course update(@PathVariable Long id,
                          @RequestBody CourseResponseDTO courseResponseDTO) {
         return courseService.update(id, courseResponseDTO);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ApiOperation(value = "${CourseController.delete}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Course doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @DeleteMapping(value = "/courses/{id}")
+    public String delete(@PathVariable Long id) {
+        courseService.delete(id);
+        return id.toString();
     }
 }
