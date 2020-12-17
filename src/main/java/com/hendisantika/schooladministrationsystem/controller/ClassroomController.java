@@ -54,4 +54,16 @@ public class ClassroomController {
     public Classroom findById(@PathVariable Long id) {
         return classroomService.findById(id);
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_HEADTEACHER')")
+    @ApiOperation(value = "${ClassroomController.findByHeadteacherId}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Classroom doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping(value = "/classrooms/headteacher/{id}")
+    public Classroom findByHeadteacherId(@PathVariable Long id) {
+        return classroomService.findByHeadteacher(id);
+    }
 }
