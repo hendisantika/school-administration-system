@@ -2,6 +2,7 @@ package com.hendisantika.schooladministrationsystem.controller;
 
 import com.hendisantika.schooladministrationsystem.dto.response.ClassroomResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Classroom;
+import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.service.ClassroomService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -94,5 +95,17 @@ public class ClassroomController {
     public Classroom update(@PathVariable Long id,
                             @RequestBody ClassroomResponseDTO classroomResponseDTO) {
         return classroomService.update(id, classroomResponseDTO);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_HEADTEACHER')")
+    @ApiOperation(value = "${ClassroomController.getStudentsFromClassroom}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Students don't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping(value = "/classrooms/students/{id}")
+    public List<Student> getStudentsFromClassroom(@PathVariable Long id) {
+        return classroomService.getStudentsFromClassroom(id);
     }
 }
