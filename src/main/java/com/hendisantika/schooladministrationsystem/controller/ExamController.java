@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.controller;
 
+import com.hendisantika.schooladministrationsystem.dto.response.ExamResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Exam;
 import com.hendisantika.schooladministrationsystem.service.ExamService;
 import io.swagger.annotations.ApiOperation;
@@ -56,5 +57,17 @@ public class ExamController {
     @GetMapping(value = "/exams/{id}")
     public Exam findById(@PathVariable Long id) {
         return examService.findById(id);
+    }
+
+    @PreAuthorize("hasRole('ROLE_TEACHER') or hasRole('ROLE_HEADTEACHER')")
+    @ApiOperation(value = "${ExamController.create}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Exam cannot created"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @PostMapping(value = "/exams/create")
+    public Exam create(@RequestBody ExamResponseDTO examResponseDTO) {
+        return examService.create(examResponseDTO);
     }
 }
