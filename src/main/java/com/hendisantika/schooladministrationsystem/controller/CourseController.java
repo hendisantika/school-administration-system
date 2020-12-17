@@ -51,4 +51,15 @@ public class CourseController {
     public Course findById(@PathVariable Long id) {
         return courseService.findById(id);
     }
+
+    @ApiOperation(value = "${CourseController.getCoursesByTeacherId}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Course doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping(value = "/courses/teacher/{teacherId}")
+    public List<Course> getCoursesByTeacherId(@PathVariable Long teacherId) {
+        return courseService.getCoursesByTeacherId(teacherId);
+    }
 }
