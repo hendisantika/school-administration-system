@@ -3,6 +3,7 @@ package com.hendisantika.schooladministrationsystem.controller;
 import com.hendisantika.schooladministrationsystem.dto.ExamDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.ExamResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Exam;
+import com.hendisantika.schooladministrationsystem.entity.ExamType;
 import com.hendisantika.schooladministrationsystem.service.ExamService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -125,5 +126,17 @@ public class ExamController {
     @PostMapping(value = "/exams/form/create")
     public List<Exam> createExamsFromForm(@RequestBody List<ExamResponseDTO> examResponseDTOS) {
         return examService.createExamsFromForm(examResponseDTOS);
+    }
+
+    @PreAuthorize("hasRole('ROLE_TEACHER') or hasRole('ROLE_HEADTEACHER')")
+    @ApiOperation(value = "${ExamController.createExamsFromForm}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Exam types cannot found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @PostMapping(value = "/exams/type/all")
+    public List<ExamType> getAllExamType() {
+        return examService.getAllExamType();
     }
 }
