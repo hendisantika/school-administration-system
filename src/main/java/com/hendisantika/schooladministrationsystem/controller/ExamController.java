@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.controller;
 
+import com.hendisantika.schooladministrationsystem.dto.ExamDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.ExamResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Exam;
 import com.hendisantika.schooladministrationsystem.service.ExamService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -97,5 +99,19 @@ public class ExamController {
     public String delete(@PathVariable Long id) {
         examService.delete(id);
         return id.toString();
+    }
+
+    @PreAuthorize("hasRole('ROLE_TEACHER') or hasRole('ROLE_HEADTEACHER')")
+    @ApiOperation(value = "${ExamController.makeExamsFormToClassroom}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Classroom doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @PostMapping(value = "/exams/form/{classroomId}/{examType}")
+    public List<ExamDTO> makeExamsFormToClassroom(@PathVariable Long classroomId,
+                                                  @RequestBody String writtenAt,
+                                                  @PathVariable String examType) {
+        return examService.makeExamsFormToClassroom(classroomId, LocalDate.parse(writtenAt), examType);
     }
 }
