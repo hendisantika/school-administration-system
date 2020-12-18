@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,5 +69,18 @@ public class MessageController {
     @PostMapping(value = "/messages/create")
     public Message create(@RequestBody MessageResponseDTO messageResponseDTO) {
         return messageService.create(messageResponseDTO);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ApiOperation(value = "${MessageController.update}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Message doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @PutMapping(value = "/messages/update/{id}")
+    public Message update(@PathVariable Long id,
+                          @RequestBody MessageResponseDTO messageResponseDTO) {
+        return messageService.update(id, messageResponseDTO);
     }
 }
