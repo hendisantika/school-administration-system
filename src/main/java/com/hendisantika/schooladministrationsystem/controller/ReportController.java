@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.controller;
 
+import com.hendisantika.schooladministrationsystem.dto.response.ReportResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Report;
 import com.hendisantika.schooladministrationsystem.service.ReportService;
 import io.swagger.annotations.ApiOperation;
@@ -57,5 +58,17 @@ public class ReportController {
     @GetMapping(value = "/reports/{id}")
     public Report findById(@PathVariable Long id) {
         return reportService.findById(id);
+    }
+
+    @PreAuthorize("hasRole('ROLE_TEACHER') or hasRole('ROLE_HEADTEACHER')")
+    @ApiOperation(value = "${ReportController.create}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Report cannot created"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @PostMapping(value = "/reports/create")
+    public Report create(@RequestBody ReportResponseDTO reportResponseDTO) {
+        return reportService.create(reportResponseDTO);
     }
 }
