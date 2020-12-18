@@ -113,4 +113,15 @@ public class ReportController {
         return reportService.makeReportFormToClassroom(classroomId);
     }
 
+    @PreAuthorize("hasRole('ROLE_TEACHER') or hasRole('ROLE_HEADTEACHER')")
+    @ApiOperation(value = "${ReportController.createReportsToClassroom}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Reports cannot created"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @PostMapping(value = "/reports/form/create")
+    public List<Report> createReportsToClassroom(@RequestBody List<ReportResponseDTO> reportResponseDTOS) {
+        return reportService.createReportsToClassroom(reportResponseDTOS);
+    }
 }
