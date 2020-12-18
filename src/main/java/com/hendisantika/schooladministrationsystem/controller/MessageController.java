@@ -7,7 +7,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,5 +40,18 @@ public class MessageController {
     @GetMapping(value = "/messages/all")
     public List<Message> findAll() {
         return messageService.findAll();
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_HEADTEACHER')" +
+            "or @securityService.hasStudentAccess(principal.id, #student_id)")
+    @ApiOperation(value = "${MessageController.findById}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Message doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping(value = "/messages/{id}")
+    public Message findById(@PathVariable Long id) {
+        return messageService.findById(id);
     }
 }
