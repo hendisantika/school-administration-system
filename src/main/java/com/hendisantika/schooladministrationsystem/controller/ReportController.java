@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.controller;
 
+import com.hendisantika.schooladministrationsystem.dto.ReportDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.ReportResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.Report;
 import com.hendisantika.schooladministrationsystem.service.ReportService;
@@ -98,6 +99,18 @@ public class ReportController {
     public String delete(@PathVariable Long id) {
         reportService.delete(id);
         return id.toString();
+    }
+
+    @PreAuthorize("hasRole('ROLE_TEACHER') or hasRole('ROLE_HEADTEACHER')")
+    @ApiOperation(value = "${ReportController.makeReportFormToClassroom}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Report form cannot created"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping(value = "/reports/form/{classroomId}")
+    public List<ReportDTO> makeReportFormToClassroom(@PathVariable Long classroomId) {
+        return reportService.makeReportFormToClassroom(classroomId);
     }
 
 }
