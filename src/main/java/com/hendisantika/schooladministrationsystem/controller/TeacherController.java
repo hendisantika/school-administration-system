@@ -2,6 +2,7 @@ package com.hendisantika.schooladministrationsystem.controller;
 
 import com.hendisantika.schooladministrationsystem.dto.response.TeacherPreferenceResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.TeacherResponseDTO;
+import com.hendisantika.schooladministrationsystem.entity.TeacherPreference;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Teacher;
 import com.hendisantika.schooladministrationsystem.service.TeacherService;
 import io.swagger.annotations.ApiOperation;
@@ -134,5 +135,16 @@ public class TeacherController {
     public String setTeacherPreferences(@RequestBody TeacherPreferenceResponseDTO teacherPreferenceResponseDTO) {
         teacherService.setTeacherPreferences(teacherPreferenceResponseDTO);
         return teacherPreferenceResponseDTO.getTeacherId().toString();
+    }
+
+    @ApiOperation(value = "${TeacherController.getAllTeacherPreferences}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Preferences don't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping(value = "/teachers/preferences/{teacherId}")
+    public TeacherPreference getAllTeacherPreferences(@PathVariable Long teacherId) {
+        return teacherService.getAllTeacherPreferences(teacherId);
     }
 }
