@@ -93,4 +93,18 @@ public class TeacherController {
                           @RequestBody TeacherResponseDTO teacherResponseDTO) {
         return teacherService.update(id, teacherResponseDTO);
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ApiOperation(value = "${TeacherController.setCourse}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Teacher or Course doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @PutMapping(value = "/teachers/setCourse/{teacherId}")
+    public String setCourse(@PathVariable Long teacherId,
+                            @RequestBody Long courseId) {
+        teacherService.setCourse(teacherId, courseId);
+        return courseId.toString();
+    }
 }
