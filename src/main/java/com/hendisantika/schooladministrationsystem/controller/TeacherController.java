@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.controller;
 
+import com.hendisantika.schooladministrationsystem.dto.response.TeacherPreferenceResponseDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.TeacherResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Teacher;
 import com.hendisantika.schooladministrationsystem.service.TeacherService;
@@ -120,5 +121,18 @@ public class TeacherController {
     public String delete(@PathVariable Long id) {
         teacherService.delete(id);
         return id.toString();
+    }
+
+    @PreAuthorize("hasRole('ROLE_TEACHER') or hasRole('ROLE_HEADTEACHER')")
+    @ApiOperation(value = "${TeacherController.setTeacherPreferences}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Preferences cannot created"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @PutMapping(value = "/teachers/preferences")
+    public String setTeacherPreferences(@RequestBody TeacherPreferenceResponseDTO teacherPreferenceResponseDTO) {
+        teacherService.setTeacherPreferences(teacherPreferenceResponseDTO);
+        return teacherPreferenceResponseDTO.getTeacherId().toString();
     }
 }
