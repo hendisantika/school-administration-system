@@ -53,4 +53,15 @@ public class TeacherController {
     public Teacher findById(@PathVariable Long id) {
         return teacherService.findById(id);
     }
+
+    @ApiOperation(value = "${TeacherController.findById}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Teacher doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping(value = "/teachers/user/{userId}")
+    public Teacher findByUserId(@PathVariable Long userId) {
+        return teacherService.findByUserId(userId);
+    }
 }
