@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.controller;
 
+import com.hendisantika.schooladministrationsystem.dto.SummaryDTO;
 import com.hendisantika.schooladministrationsystem.dto.response.StudentResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.user.group.Student;
 import com.hendisantika.schooladministrationsystem.service.StudentService;
@@ -118,5 +119,18 @@ public class StudentController {
     public String delete(@PathVariable Long id) {
         studentService.delete(id);
         return id.toString();
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or  hasRole('ROLE_TEACHER') or hasRole('ROLE_HEADTEACHER') or " +
+            "@securityService.hasStudentAccess(principal.id, #id)")
+    @ApiOperation(value = "${StudentController.summary}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "The student summary doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping("/students/summary/{id}")
+    public List<SummaryDTO> summary(@PathVariable Long id) {
+        return studentService.getSummary(id);
     }
 }
