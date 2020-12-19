@@ -55,4 +55,17 @@ public class StudentController {
     public Student findById(@PathVariable Long id) {
         return studentService.findById(id);
     }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER', 'ROLE_HEADTEACHER') or " +
+            "principal.id == #userId")
+    @ApiOperation(value = "${StudentController.findByUserId}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Student doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping(value = "/students/user/{userId}")
+    public Student findByUserId(@PathVariable Long userId) {
+        return studentService.findByUserId(userId);
+    }
 }
