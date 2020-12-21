@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.controller;
 
+import com.hendisantika.schooladministrationsystem.dto.response.UserResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.user.User;
 import com.hendisantika.schooladministrationsystem.service.auth.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +13,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -86,5 +89,18 @@ public class UserController {
     @GetMapping(value = "/user/username/{username}")
     public boolean isUsernameUnique(@PathVariable String username) {
         return userService.isUsernameUnique(username);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or principal.id == #id")
+    @ApiOperation(value = "Update user by ID.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "The user doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @PutMapping(value = "/user/update/{id}")
+    public User update(@PathVariable Long id,
+                       @RequestBody UserResponseDTO userResponseDTO) {
+        return userService.update(id, userResponseDTO);
     }
 }
