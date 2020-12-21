@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -91,5 +92,18 @@ public class TimeTableController {
     @GetMapping(value = "/timetables/create")
     public TimeTableEntity create(@RequestBody TimeTableEntityResponseDTO timeTableEntityResponseDTO) {
         return timeTableService.create(timeTableEntityResponseDTO);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ApiOperation(value = "${TimeTableController.update}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "TimetableEntity doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @PutMapping(value = "/timetables/update/{id}")
+    public TimeTableEntity update(@PathVariable Long id,
+                                  @RequestBody TimeTableEntityResponseDTO timeTableEntityResponseDTO) {
+        return timeTableService.update(id, timeTableEntityResponseDTO);
     }
 }
