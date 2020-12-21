@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : school-administration-system
@@ -51,5 +53,17 @@ public class TimeTableController {
     @GetMapping(value = "/timetables/teacher/{id}")
     public TimeTableEntity[][] getTimeTableByTeacher(@PathVariable Long id) {
         return timeTableService.getTimeTableByTeacher(id);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ApiOperation(value = "${TimeTableController.getTimeTableEntitiesByCourse}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Timetable doesn't found to course"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping(value = "/timetables/course/{course_id}")
+    public List<TimeTableEntity> getTimeTableEntitiesByCourse(@PathVariable Long course_id) {
+        return timeTableService.getTimeTableEntitiesByCourse(course_id);
     }
 }
