@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -102,5 +103,17 @@ public class UserController {
     public User update(@PathVariable Long id,
                        @RequestBody UserResponseDTO userResponseDTO) {
         return userService.update(id, userResponseDTO);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ApiOperation(value = "Delete User by ID.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "The user doesn't exist"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @DeleteMapping(value = "/user/{id}")
+    public String delete(@PathVariable Long id) {
+        return userService.delete(id);
     }
 }
