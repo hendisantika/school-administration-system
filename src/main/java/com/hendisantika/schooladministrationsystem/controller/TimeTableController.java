@@ -40,4 +40,16 @@ public class TimeTableController {
     public TimeTableEntity[][] getTimeTableByStudent(@PathVariable Long id) {
         return timeTableService.getTimeTableByStudent(id);
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or @securityService.hasTeacherAccess(principal.id, #id)")
+    @ApiOperation(value = "${TimeTableController.getTimeTableByTeacher}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "Timetable doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping(value = "/timetables/teacher/{id}")
+    public TimeTableEntity[][] getTimeTableByTeacher(@PathVariable Long id) {
+        return timeTableService.getTimeTableByTeacher(id);
+    }
 }
