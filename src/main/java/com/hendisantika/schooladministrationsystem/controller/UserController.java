@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,5 +41,20 @@ public class UserController {
     @GetMapping(value = "/user/all")
     public List<User> getAll() {
         return userService.findAll();
+    }
+
+    @PreAuthorize("hasRole('ROLE_TEACHER') " +
+            "or hasRole('ROLE_HEADTEACHER') " +
+            "or hasRole('ROLE_ADMIN') " +
+            "or @securityService.hasStudentAccess(principal.id, #id)")
+    @ApiOperation(value = "Get User by ID.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "The user doesn't found"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping(value = "/user/{id}")
+    public User getById(@PathVariable Long id) {
+        return userService.findById(id);
     }
 }
