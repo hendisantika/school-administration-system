@@ -1,5 +1,6 @@
 package com.hendisantika.schooladministrationsystem.controller;
 
+import com.hendisantika.schooladministrationsystem.dto.response.TimeTableEntityResponseDTO;
 import com.hendisantika.schooladministrationsystem.entity.TimeTableEntity;
 import com.hendisantika.schooladministrationsystem.service.TimeTableService;
 import io.swagger.annotations.ApiOperation;
@@ -10,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -77,5 +79,17 @@ public class TimeTableController {
     @GetMapping(value = "/timetables/{id}")
     public TimeTableEntity findById(@PathVariable Long id) {
         return timeTableService.findById(id);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ApiOperation(value = "${TimeTableController.create}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "TimetableEntity cannot created"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping(value = "/timetables/create")
+    public TimeTableEntity create(@RequestBody TimeTableEntityResponseDTO timeTableEntityResponseDTO) {
+        return timeTableService.create(timeTableEntityResponseDTO);
     }
 }
