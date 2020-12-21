@@ -76,4 +76,15 @@ public class UserController {
         result.put("result", "success");
         return ResponseEntity.accepted().body(result);
     }
+
+    @ApiOperation(value = "Check the username is unique.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 404, message = "The username is not valid"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    @GetMapping(value = "/user/username/{username}")
+    public boolean isUsernameUnique(@PathVariable String username) {
+        return userService.isUsernameUnique(username);
+    }
 }
