@@ -1,0 +1,32 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <h2>Create Exam</h2>
+    </div>
+    <div class="container">
+      <form #form="ngForm" (ngSubmit)="onSubmit()" class="form-exam">
+        <div class="form-group">
+          <label for="etype">Exam Type</label>
+          <select [(ngModel)]="etype" class="form-control" id="etype" name="etype" required>
+            <option [ngValue]="TEST">Test</option>
+            <option [ngValue]="TOPIC_TEST">Topic Test</option>
+            <option [ngValue]="REPETITION">Repetition</option>
+            <option [ngValue]="HOMEWORK">Homework</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="mark">Mark</label>
+          <input [(ngModel)]="exam.mark" class="form-control" id="mark" name="mark" required type="number">
+        </div>
+        <div class="form-group">
+          <label for="written_at">Written At</label>
+          <input [(ngModel)]="exam.written_at" class="form-control" id="written_at" name="written_at" required
+                 type="date">
+        </div>
+        <button (click)="goBack()" class="btn btn-dark" type="submit">Back</button>
+        <button class="btn btn-success" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
