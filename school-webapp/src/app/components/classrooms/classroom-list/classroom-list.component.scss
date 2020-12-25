@@ -1,0 +1,25 @@
+$gray: #9b9b9b;
+
+h3 {
+  margin-top: 1em;
+}
+
+table {
+  margin-top: 1em;
+}
+
+table > tbody > tr > td > button {
+  margin-right: 0.1em;
+}
+
+.form-control-searchbox {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid $gray;
+  outline: 0;
+  font-size: 1.3rem;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}

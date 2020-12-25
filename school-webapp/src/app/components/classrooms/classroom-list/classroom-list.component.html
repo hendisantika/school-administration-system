@@ -1,0 +1,72 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <div class="container">
+        <h3>Classes</h3>
+        <button (click)='createClassroom()' *ngIf="userRole() === 'ROLE_ADMIN'" class="btn btn-info" mat-button
+                mat-ripple>Create Classroom
+        </button>
+      </div>
+      <div class="container">
+        <input [(ngModel)]="searchText" autocomplete="on" class="form-control-searchbox" name="search"
+               placeholder="&#171; Search"
+               type="text">
+        <table class="table table-striped table-sm">
+          <thead class="thead-dark">
+          <tr>
+            <th>Class tag</th>
+            <th>Start year</th>
+            <th>End year</th>
+            <th>Headteacher</th>
+            <th>Function</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let classroom of classrooms | filter:searchText">
+            <td>{{classroom.year}}/{{classroom.letter}}</td>
+            <td>{{classroom.start_year}}</td>
+            <td>{{classroom.end_year}}</td>
+            <td>{{classroom.headTeacher.teacher.fullName}}</td>
+            <td>
+              <button (click)="update(classroom.id)"
+                      *ngIf="this.currentUser.authorities[0].authority + '' === 'ROLE_ADMIN'" class="btn btn-warning">
+                Update
+              </button>
+              <button (click)="delete(classroom.id)"
+                      *ngIf="this.currentUser.authorities[0].authority + '' === 'ROLE_ADMIN'" class="btn btn-danger">
+                Delete
+              </button>
+              <button (click)="setCourse(classroom.id)"
+                      *ngIf="this.currentUser.authorities[0].authority + '' === 'ROLE_ADMIN'" class="btn btn-info">Set
+                Course
+              </button>
+              <button (click)="finished(classroom.id)"
+                      *ngIf="this.currentUser.authorities[0].authority + '' === 'ROLE_ADMIN'" class="btn btn-info">
+                Graduated
+              </button>
+
+              <button (click)="exam(classroom.id)"
+                      *ngIf="this.currentUser.authorities[0].authority + '' != 'ROLE_ADMIN'" class="btn btn-secondary">
+                Exam
+              </button>
+              <button (click)="report(classroom.id)"
+                      *ngIf="this.currentUser.authorities[0].authority + '' != 'ROLE_ADMIN'" class="btn btn-secondary">
+                Report
+              </button>
+              <button (click)="attendance(classroom.id)"
+                      *ngIf="this.currentUser.authorities[0].authority + '' != 'ROLE_ADMIN'" class="btn btn-secondary">
+                Attendance
+              </button>
+              <button (click)="students(classroom.id)"
+                      *ngIf="this.currentUser.authorities[0].authority + '' != 'ROLE_ADMIN'" class="btn btn-secondary">
+                Students
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
