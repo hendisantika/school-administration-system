@@ -1,0 +1,23 @@
+<app-panel-loader></app-panel-loader>
+<div class="container">
+  <div class="container" id="header_message">
+    <h3>Info</h3>
+    <div *ngIf="isDataAvailable">
+      <button (click)="create()" *ngIf="userRole() === 'ROLE_ADMIN'" class="btn btn-dark">Create Message</button>
+    </div>
+  </div>
+  <div class="container">
+    <div *ngFor="let message of messages" class="message">
+      <p>{{message.text}}</p>
+      <div class="footer">
+        <strong class="time">{{message.createdAt | date:'medium'}}</strong>
+        <div *ngIf="isDataAvailable" class="container">
+          <button (click)="update(message.id)" *ngIf="userRole() === 'ROLE_ADMIN'" class="btn btn-warning">Update
+          </button>
+          <button (click)="delete(message.id)" *ngIf="userRole() === 'ROLE_ADMIN'" class="btn btn-danger">Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

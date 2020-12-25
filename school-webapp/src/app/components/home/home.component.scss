@@ -1,0 +1,23 @@
+.home-container {
+  width: 100%;
+}
+
+#header_message {
+  padding-top: 3em;
+}
+
+.message {
+  margin: 2em;
+  padding-bottom: 3px;
+  border-bottom: 1px solid;
+}
+
+.footer {
+  float: right;
+  margin-top: 1em;
+  font-size: small;
+}
+
+.footer > button {
+  margin-left: 3px;
+}
