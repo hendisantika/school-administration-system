@@ -1,0 +1,45 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <h3>Statistics</h3>
+    </div>
+    <div class="container">
+      <div class="container">
+        <h3>Averages</h3>
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>Course</th>
+            <th>Average</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let average of averages">
+            <td><strong>{{average.course.title}}</strong></td>
+            <td>{{average.result.toFixed(2)}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="container">
+        <h3>Failing Students</h3>
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>Username</th>
+            <th>fullName</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let fail of failed">
+            <td>{{fail.student.student.username}}</td>
+            <td>{{fail.student.student.fullName}}</td>
+            <td *ngFor="let course of fail.courses" style="border: 1px solid #000">{{course.title}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
