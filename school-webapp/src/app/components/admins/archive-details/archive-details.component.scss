@@ -1,0 +1,11 @@
+td {
+  text-align: center;
+
+  &:first-child {
+    font-weight: bold;
+  }
+}
+
+table {
+  margin-top: 2em;
+}
