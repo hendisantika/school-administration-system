@@ -1,0 +1,56 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="hasSignedId()" class="container">
+    <h2>Course</h2>
+    <div class="container">
+      <table *ngIf="course" class="table table-bordered">
+        <tbody>
+        <tr>
+          <td>Tile</td>
+          <td>{{course.title}}</td>
+        </tr>
+        <tr>
+          <td>Year</td>
+          <td>{{course.year}}</td>
+        </tr>
+        <tr>
+          <td>Teacher</td>
+          <td>{{course.teacher.teacher.fullName}}</td>
+        </tr>
+        <tr>
+          <td>Phone</td>
+          <td>{{course.teacher.phone}}</td>
+        </tr>
+        <tr>
+          <td>E-mail</td>
+          <td>{{course.teacher.email}}</td>
+        </tr>
+        </tbody>
+      </table>
+      <h3>Weights to exams</h3>
+      <table *ngIf="preference" class="table table-bordered">
+        <tbody>
+        <tr>
+          <td>Test</td>
+          <td>{{preference.testWeight}}</td>
+        </tr>
+        <tr>
+          <td>Topic Test</td>
+          <td>{{preference.topicTestWeight}}</td>
+        </tr>
+        <tr>
+          <td>Repetition</td>
+          <td>{{preference.repetitionWeight}}</td>
+        </tr>
+        <tr>
+          <td>Homework</td>
+          <td>{{preference.homeworkWeight}}</td>
+        </tr>
+        </tbody>
+      </table>
+      <button (click)="goBack()" class="btn btn-dark">Back</button>
+    </div>
+  </div>
+</div>
+
+

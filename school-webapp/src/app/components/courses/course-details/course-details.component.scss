@@ -1,0 +1,12 @@
+table {
+  width: 40%;
+  margin-top: 1em;
+}
+
+td {
+  text-align: center;
+
+  &:first-child {
+    font-weight: bold;
+  }
+}
