@@ -1,0 +1,46 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <div class="container">
+        <h3>Attendances</h3>
+        <button (click)="goBack()" class="btn btn-dark">Back</button>
+      </div>
+      <div class="container">
+        <form #form="ngForm" (ngSubmit)="onSubmit()" class="form-students">
+          <table class="table table-bordered table-sm">
+            <thead class="thead-dark">
+            <tr>
+              <th>Date of miss</th>
+              <th>Lecture</th>
+              <th>Student name</th>
+              <th>Verified</th>
+              <th>Check</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let attendance of attendances; index as i">
+              <td *ngIf="attendance.verified" class="green"><b>{{attendance.dateOfMiss}}</b></td>
+              <td *ngIf="attendance.verified" class="green"><b>{{attendance.lecture}}</b></td>
+              <td *ngIf="attendance.verified" class="green"><b>{{attendance.student.student.fullName}}</b></td>
+              <td *ngIf="attendance.verified" class="green"><b>{{attendance.verified}}</b></td>
+
+              <td *ngIf="!attendance.verified" class="red"><b>{{attendance.dateOfMiss}}</b></td>
+              <td *ngIf="!attendance.verified" class="red"><b>{{attendance.lecture}}</b></td>
+              <td *ngIf="!attendance.verified" class="red"><b>{{attendance.student.student.fullName}}</b></td>
+              <td *ngIf="!attendance.verified" class="red"><b>{{attendance.verified}}</b></td>
+              <td>
+                <input [(ngModel)]="miss[i]" [attr.disabled]="attendance.verified ? true : null" class="miss-input"
+                       name="miss" type="checkbox">
+              </td>
+
+            </tr>
+            </tbody>
+          </table>
+          <button class="btn btn-success" type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

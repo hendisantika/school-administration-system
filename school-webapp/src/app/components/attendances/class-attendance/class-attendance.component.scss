@@ -1,0 +1,44 @@
+$gray: #9b9b9b;
+$green: #9fbf6e;
+$red: #b96666;
+
+h3 {
+  margin-top: 1em;
+}
+
+table {
+  margin-top: 1em;
+}
+
+thead > tr > th {
+  text-align: center;
+}
+
+tbody > tr > td {
+  text-align: center;
+}
+
+.miss-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.green {
+  background-color: $green;
+}
+
+.red {
+  background-color: $red;
+}
+
+.form-control-searchbox {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid $gray;
+  outline: 0;
+  font-size: 1.3rem;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
