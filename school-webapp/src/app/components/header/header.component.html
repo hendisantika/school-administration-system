@@ -1,0 +1,11 @@
+<div *ngIf="isDataAvailable">
+  <mat-toolbar class="toolbar">
+    <span mat-button mat-ripple routerLink="/home">Enaplo</span>
+    <div class="right">
+      <button *ngIf="hasSignedIn()" class="home-button" mat-button mat-ripple routerLink="/home">Home</button>
+      <button (click)="logout()" *ngIf="hasSignedIn()" class="log-button">Logout</button>
+      <button *ngIf="!hasSignedIn()" class="log-button" mat-button mat-ripple routerLink="/login">Login</button>
+    </div>
+  </mat-toolbar>
+</div>
+
