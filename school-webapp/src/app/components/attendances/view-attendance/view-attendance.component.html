@@ -1,0 +1,42 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <div class="container">
+        <h3>Attendances</h3>
+        <button (click)="goBack()" *ngIf="currentUser.authorities[0].authority + '' != 'ROLE_STUDENT'"
+                class="btn btn-dark">Back
+        </button>
+      </div>
+      <div class="container">
+        <input [(ngModel)]="searchText" autocomplete="on" class="form-control-searchbox" name="search"
+               placeholder="&#171; Search"
+               type="text">
+        <table class="table table-bordered table-sm">
+          <thead class="thead-dark">
+          <tr>
+            <th>Date of miss</th>
+            <th>Lecture</th>
+            <th>Verified</th>
+            <th *ngIf="currentUser.authorities[0].authority + '' != 'ROLE_STUDENT'">Function</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let attendance of attendances | filter:searchText">
+            <td *ngIf="attendance.verified" class="green"><b>{{attendance.dateOfMiss}}</b></td>
+            <td *ngIf="attendance.verified" class="green"><b>{{attendance.lecture}}</b></td>
+            <td *ngIf="attendance.verified" class="green"><b>{{attendance.verified}}</b></td>
+            <td *ngIf="!attendance.verified" class="red"><b>{{attendance.dateOfMiss}}</b></td>
+            <td *ngIf="!attendance.verified" class="red"><b>{{attendance.lecture}}</b></td>
+            <td *ngIf="!attendance.verified" class="red"><b>{{attendance.verified}}</b></td>
+            <td *ngIf="currentUser.authorities[0].authority + '' != 'ROLE_STUDENT'">
+              <button (click)="delete(attendance.id)" class="btn btn-warning">Delete</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
