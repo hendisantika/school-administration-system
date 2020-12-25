@@ -1,0 +1,26 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <h2>Administration</h2>
+    </div>
+    <div class="container">
+      <table class="table table-bordered">
+        <tbody>
+        <tr>
+          <td>Create Archives</td>
+          <td>
+            <button (click)="create()" class="btn btn-dark">Create Archive</button>
+          </td>
+        </tr>
+        <tr>
+          <td>New year</td>
+          <td>
+            <button (click)="newYear()" class="btn btn-warning">Update</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
