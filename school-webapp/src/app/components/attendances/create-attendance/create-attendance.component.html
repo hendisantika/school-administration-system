@@ -1,0 +1,45 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <h2>Create attendances for class</h2>
+    </div>
+    <div class="container">
+      <form #form="ngForm" (ngSubmit)="setBasic()" class="form-basic">
+        <div class="form-group">
+          <label for="dom">Date of miss</label>
+          <input [(ngModel)]="dom" class="form-control" id="dom" name="dom" required type="date">
+        </div>
+        <div class="form-group">
+          <label for="lesson">Lesson</label>
+          <input [(ngModel)]="lesson" class="form-control" id="lesson" max="14" min="1" name="lesson" required
+                 type="number">
+        </div>
+        <button (click)="openSnackBar('Form created', 'Ok')" class="btn btn-dark" type="submit">Create Form</button>
+      </form>
+    </div>
+    <div *ngIf="isBasicSet" class="container" id="form-response">
+      <form #form="ngForm" (ngSubmit)="onSubmit()" class="form-students">
+        <div class="form-objects">
+          <table class="table table-borderless">
+            <tbody>
+            <tr *ngFor="let attendance of attendances; index as i">
+              <td>
+                <i>{{attendance.student.student.username}}</i>
+              </td>
+              <td>
+                <b>{{attendance.student.student.fullName}}</b>
+              </td>
+              <td>
+                <input [(ngModel)]="miss[i]" class="miss-input" name="miss" type="checkbox">
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="btn btn-success" type="submit">Submit</button>
+        <button (click)="goBack()" class="btn btn-dark">Back</button>
+      </form>
+    </div>
+  </div>
+</div>
