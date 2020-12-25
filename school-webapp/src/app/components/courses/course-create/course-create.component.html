@@ -1,0 +1,26 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <h2>Create</h2>
+    <div class="container">
+      <form #form="ngForm" (ngSubmit)="onSubmit()" class="form-course">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input [(ngModel)]="course.title" class="form-control" id="title" name="title" required type="text">
+        </div>
+        <div class="form-group">
+          <label for="year">Year</label>
+          <input [(ngModel)]="course.year" class="form-control" id="year" name="year" required type="number">
+        </div>
+        <div class="form-group">
+          <label for="teacher">Teacher</label>
+          <select [(ngModel)]="selectedOption" class="form-control form-control-sm" name="teacher">
+            <option *ngFor="let teacher of teachers" [ngValue]="teacher">{{teacher.teacher.fullName}}</option>
+          </select>
+        </div>
+        <button (click)="goBack()" class="btn btn-dark" type="submit">Back</button>
+        <button class="btn btn-success" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
