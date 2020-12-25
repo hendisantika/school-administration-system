@@ -1,0 +1,48 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="hasSignedIn()" class="container">
+    <div class="container">
+      <div class="container">
+        <h3>Courses</h3>
+        <button (click)='createCourse()' *ngIf="currentUser.authorities[0].authority + '' === 'ROLE_ADMIN'"
+                class="btn btn-info" mat-button mat-ripple>Create Course
+        </button>
+      </div>
+      <div class="container">
+        <input [(ngModel)]="searchText" autocomplete="on" class="form-control-searchbox" name="search"
+               placeholder="&#171; Search"
+               type="text">
+        <table class="table table-striped table-sm">
+          <thead class="thead-dark">
+          <tr>
+            <th>Title</th>
+            <th>Year</th>
+            <th>Teacher</th>
+            <th>Functions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let course of courses | filter:searchText">
+            <td>{{course.title}}</td>
+            <td>{{course.year}}</td>
+            <td>{{course.teacher.teacher.fullName}}</td>
+            <td>
+              <button (click)="details(course.id)" class="btn btn-info">Details</button>
+              <button (click)="update(course.id)" *ngIf="currentUser.authorities[0].authority + '' === 'ROLE_ADMIN'"
+                      class="btn btn-warning">Update
+              </button>
+              <button (click)="delete(course.id)" *ngIf="currentUser.authorities[0].authority + '' === 'ROLE_ADMIN'"
+                      class="btn btn-danger">Delete
+              </button>
+              <button (click)="timetable(course.id)" *ngIf="currentUser.authorities[0].authority + '' === 'ROLE_ADMIN'"
+                      class="btn btn-dark">TimeTable
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
