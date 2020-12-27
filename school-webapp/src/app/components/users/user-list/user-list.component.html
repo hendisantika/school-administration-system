@@ -1,0 +1,42 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <div class="container">
+        <h3>Users</h3>
+        <button (click)='createStudent()' class="btn btn-dark" mat-button mat-ripple>Create Student</button>
+        <button (click)='createTeacher()' class="btn btn-dark" mat-button mat-ripple>Create Teacher</button>
+      </div>
+      <div class="container">
+        <input [(ngModel)]="searchText" autocomplete="on" class="form-control-searchbox" name="search"
+               placeholder="&#171; Search"
+               type="text">
+        <table class="table table-striped table-sm">
+          <thead class="thead-dark">
+          <tr>
+            <th>Username</th>
+            <th>Fullname</th>
+            <th>Function</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let user of users | filter:searchText">
+            <td>{{user.username}}</td>
+            <td>{{user.fullName}}</td>
+            <td>
+              <button (click)="details(user.id)" class="btn btn-info">Details</button>
+              <button (click)="update(user.id)" class="btn btn-warning">Update</button>
+              <button (click)="delete(user.id)" *ngIf="user.id != currentUser.id" class="btn btn-danger">Delete</button>
+              <button (click)="setCourse(user.id)" *ngIf="user.authorities[0].authority + '' === 'ROLE_STUDENT'"
+                      class="btn btn-secondary">Set Course
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+

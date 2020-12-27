@@ -1,0 +1,33 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <h2>Update</h2>
+    </div>
+    <div class="container">
+      <form #form="ngForm" (ngSubmit)="onSubmit()" class="form-user">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input [(ngModel)]="response.username" [disabled]="userSubmitted" class="form-control" id="username"
+                 name="username" placeholder="{{user.username}}" required type="text" value="{{user.username}}">
+        </div>
+        <div class="form-group">
+          <label for="new-password">New Password</label>
+          <input [(ngModel)]="newPassword" class="form-control" id="new-password" name="password" placeholder="Password"
+                 required type="password">
+        </div>
+        <div class="form-group">
+          <label for="re-password">Re-Enter Password</label>
+          <input [(ngModel)]="reEnterPassword" class="form-control" id="re-password" name="password"
+                 placeholder="Password" required type="password">
+        </div>
+        <div class="form-group">
+          <label for="fullName">Fullname</label>
+          <input [(ngModel)]="response.fullName" class="form-control" id="fullName" name="fullName"
+                 placeholder="Fullname" required type="text">
+        </div>
+        <button (click)="goBack()" class="btn btn-dark" type="submit">Back</button>
+        <button class="btn btn-success" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
