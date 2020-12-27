@@ -1,0 +1,10 @@
+<mat-toolbar class="headteacher-panel">
+  <div *ngIf="isDataAvailable" class="headteacher-panel-container">
+    <span class="title">Headteacher</span>
+    <div class="right">
+      <button (click)='getMyClassroom()' class="headteacher-button" mat-button mat-ripple>My Class</button>
+      <button (click)='getStatistics()' class="headteacher-button" mat-button mat-ripple>Statistics</button>
+      <button (click)='getAttendances()' class="headteacher-button" mat-button mat-ripple>Attendances</button>
+    </div>
+  </div>
+</mat-toolbar>

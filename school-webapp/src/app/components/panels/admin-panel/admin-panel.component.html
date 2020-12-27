@@ -1,0 +1,14 @@
+<mat-toolbar class="admin-panel">
+  <div *ngIf="isDataAvailable" class="admin-panel-container">
+    <span class="title">Admin</span>
+    <div class="right">
+      <button (click)='getAllUser()' class="admin-button" mat-button mat-ripple>Users</button>
+      <button (click)='getAllRooms()' class="admin-button" mat-button mat-ripple>Rooms</button>
+      <button (click)='admin()' class="admin-button" mat-button mat-ripple>Admin</button>
+      <button (click)='archives()' class="admin-button" mat-button mat-ripple>Archives</button>
+      <button (click)='getAllClassroom()' class="admin-button" mat-button mat-ripple>Classrooms</button>
+      <button (click)='getAllCourse()' class="admin-button" mat-button mat-ripple>Courses</button>
+      <button (click)='update()' class="admin-button" mat-button mat-ripple>Update</button>
+    </div>
+  </div>
+</mat-toolbar>

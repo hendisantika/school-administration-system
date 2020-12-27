@@ -1,0 +1,41 @@
+$admin-color: #a01a2e;
+$secondary: #fff;
+$padding: 4em;
+$tr: all 0.3s ease;
+
+.admin-panel {
+  width: 100%;
+}
+
+.admin-panel-container {
+  background-color: $admin-color;
+  color: white;
+  border-bottom: 2px solid $admin-color;
+}
+
+.title {
+  font-weight: bold;
+  padding-left: $padding;
+  font-size: 1em;
+
+}
+
+.right {
+  float: right;
+}
+
+
+.admin-button {
+  padding-right: $padding;
+  background-color: $admin-color;
+  color: $secondary;
+  cursor: pointer;
+  transition: $tr;
+  font-size: 1em;
+  border: none;
+
+  &:hover {
+    background-color: $secondary;
+    color: $admin-color;
+  }
+}
