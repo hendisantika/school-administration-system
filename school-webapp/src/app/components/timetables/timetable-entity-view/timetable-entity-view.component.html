@@ -1,0 +1,39 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="hasSignedIn()" class="container">
+    <div class="container">
+      <h2>Timetable</h2>
+    </div>
+    <div class="container">
+      <table class="table table-sm">
+        <thead class="thead-dark">
+        <th>#</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thurstday</th>
+        <th>Friday</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of timetable; index as counter">
+          <td><b>{{counter + 1}}</b></td>
+          <td *ngFor="let entity of row">
+            <div *ngIf="!!entity">
+              <table class="table-sm">
+                <tr>
+                  <td>Course:</td>
+                  <td><b>{{entity.course.title}}</b></td>
+                </tr>
+                <tr>
+                  <td>Classroom:</td>
+                  <td><b>{{entity.room.classroomNumber}}</b></td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

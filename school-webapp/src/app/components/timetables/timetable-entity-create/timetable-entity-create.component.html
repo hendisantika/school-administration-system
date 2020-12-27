@@ -1,0 +1,37 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <h2>Create</h2>
+    </div>
+    <button (click)='goBack()' class="btn btn-warning" mat-button mat-ripple>Back</button>
+    <div class="container">
+      <form #form="ngForm" (ngSubmit)="onSubmit()" class="form-timetable">
+        <div class="form-group">
+          <label for="classroom">Class</label>
+          <select [(ngModel)]="selectedOptionClassroom" class="form-control form-control-sm" name="classroom">
+            <option *ngFor="let classroom of classrooms" [ngValue]="classroom">{{classroom.year}}
+              /{{classroom.letter}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="day">Day</label>
+          <input [(ngModel)]="timeTableEntity.day" class="form-control" id="day" name="day" required type="number">
+        </div>
+        <div class="form-group">
+          <label for="lessonNumber">Lesson Number</label>
+          <input [(ngModel)]="timeTableEntity.lessonNumber" class="form-control" id="lessonNumber" name="lessonNumber"
+                 required type="number">
+        </div>
+        <div class="form-group">
+          <label for="room">Classroom</label>
+          <select [(ngModel)]="selectedOptionRoom" class="form-control form-control-sm" name="room">
+            <option *ngFor="let room of rooms" [ngValue]="room">{{room.classroomBumber}}</option>
+          </select>
+        </div>
+        <button (click)="goBack()" class="btn btn-dark" type="submit">Back</button>
+        <button class="btn btn-success" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
