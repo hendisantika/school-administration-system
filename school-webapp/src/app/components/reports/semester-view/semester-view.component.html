@@ -1,0 +1,57 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <h2>Reports</h2>
+    </div>
+    <div class="container">
+      <form #form="ngForm" (ngSubmit)="onSubmit()" class="form-report">
+        <table class="table table-borderless">
+          <tbody>
+          <tr>
+            <td>
+              <div class="form-group">
+                <label for="year">Year</label>
+                <input [(ngModel)]="year" class="form-control" id="year" max="14" min="1" name="year" required
+                       type="number">
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <label for="semester">Semester</label>
+                <select [(ngModel)]="semester" class="form-control" id="semester" name="semster" required>
+                  <option [ngValue]="1">1</option>
+                  <option [ngValue]="2">2</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <button class="btn btn-success" type="submit">Submit</button>
+        <button (click)="goBack()" *ngIf="this.currentUser.authorities[0].authority + '' != 'ROLE_STUDENT'"
+                class="btn btn-dark">Back
+        </button>
+      </form>
+    </div>
+    <div *ngIf="selected" class="container">
+      <table class="table table-striped table-sm table-bordered" id="form-response">
+        <thead class="thead-dark">
+        <th>Subject</th>
+        <th>Marks</th>
+        <th *ngIf="currentUser.authorities[0].authority + '' != 'ROLE_STUDENT'">Function</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let report of reports">
+          <td>{{report.course.title}}</td>
+          <td>{{report.mark}}</td>
+          <td *ngIf="currentUser.authorities[0].authority + '' != 'ROLE_STUDENT'">
+            <button (click)="update(report.id)" class="btn btn-warning">Update</button>
+            <button (click)="delete(report.id)" class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

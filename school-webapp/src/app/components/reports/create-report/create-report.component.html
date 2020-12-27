@@ -1,0 +1,37 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <h2>Create</h2>
+    </div>
+    <div class="container">
+      <form #form="ngForm" (ngSubmit)="onSubmit()" class="form-report">
+        <div class="form-group">
+          <label for="course">Course</label>
+          <select [(ngModel)]="selectedOption" class="form-control form-control-sm" name="course">
+            <option *ngFor="let course of courses" [ngValue]="course">{{course.title}}/{{course.year}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="year">Year</label>
+          <input [(ngModel)]="report.year" class="form-control" id="year" max="14" min="1" name="year" required
+                 type="number">
+        </div>
+        <div class="form-group">
+          <label for="semester">Semester</label>
+          <select [(ngModel)]="semester" class="form-control" id="semester" name="semster" required>
+            <option [ngValue]="1">1</option>
+            <option [ngValue]="2">2</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="mark">Mark</label>
+          <input [(ngModel)]="report.mark" class="form-control" id="mark" max="5" min="1" name="mark" required
+                 type="number">
+        </div>
+        <button (click)="goBack()" class="btn btn-dark" type="submit">Back</button>
+        <button class="btn btn-success" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
