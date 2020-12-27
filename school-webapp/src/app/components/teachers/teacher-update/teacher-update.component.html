@@ -1,0 +1,25 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <h2>Update</h2>
+    </div>
+    <div class="container">
+      <button (click)='userUpdate()' class="btn btn-dark" mat-button mat-ripple>Account settings</button>
+      <form #form="ngForm" (ngSubmit)="submit()" class="form">
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input [(ngModel)]="response.email" class="form-control" id="email" name="email"
+                 placeholder="{{teacher.email}}" required type="email" value="{{teacher.email}}">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input [(ngModel)]="response.phone" class="form-control" id="phone" name="phone"
+                 placeholder="{{teacher.phone}}" required type="text" value="{{teacher.phone}}">
+        </div>
+        <button class="btn btn-success" type="submit">Submit</button>
+        <button (click)="goBack()" class="btn btn-dark">Back</button>
+      </form>
+    </div>
+  </div>
+</div>

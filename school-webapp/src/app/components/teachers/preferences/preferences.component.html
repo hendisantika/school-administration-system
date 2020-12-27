@@ -1,0 +1,33 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <h2>Preferences</h2>
+    <div class="container">
+      <form #form="ngForm" (ngSubmit)="onSubmit()" class="form-preferences">
+        <div class="form-group">
+          <label for="testWeight">Test</label>
+          <input [(ngModel)]="preferences.testWeight" [disabled]="!underModifying" class="form-control" id="testWeight"
+                 max="5" min="0" name="testWeight" required type="number">
+        </div>
+        <div class="form-group">
+          <label for="topicTestWeight">Topic Test</label>
+          <input [(ngModel)]="preferences.topicTestWeight" [disabled]="!underModifying" class="form-control"
+                 id="topicTestWeight" max="5" min="0" name="topicTestWeight" required type="number">
+        </div>
+        <div class="form-group">
+          <label for="repetitionWeight">Repetition</label>
+          <input [(ngModel)]="preferences.repetitionWeight" [disabled]="!underModifying" class="form-control"
+                 id="repetitionWeight" max="5" min="0" name="repetitionWeight" required type="number">
+        </div>
+        <div class="form-group">
+          <label for="homeworkWeight">Homework</label>
+          <input [(ngModel)]="preferences.homeworkWeight" [disabled]="!underModifying" class="form-control"
+                 id="homeworkWeight" max="5" min="0" name="homeworkWeight" required type="number">
+        </div>
+        <button (click)="goBack()" *ngIf="underModifying" class="btn btn-dark" type="submit">Back</button>
+        <button (click)="modify()" *ngIf="!underModifying" class="btn btn-dark">Modify</button>
+        <button *ngIf="underModifying" class="btn btn-success" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
