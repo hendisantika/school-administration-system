@@ -1,0 +1,25 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <h3>Info</h3>
+      <button (click)="create()" *ngIf="this.currentUser.authorities[0].authority + '' != 'ROLE_STUDENT'"
+              class="btn btn-dark">Create Message
+      </button>
+    </div>
+    <div class="container">
+      <div *ngFor="let remark of remarks" class="remark">
+        <p>{{remark.text}}</p>
+        <div class="footer">
+          <strong class="time">{{remark.writtenAt}}</strong>
+          <button (click)="update(remark.id)" *ngIf="currentUser.authorities[0].authority + '' != 'ROLE_STUDENT'"
+                  class="btn btn-warning">Update
+          </button>
+          <button (click)="delete(remark.id)" *ngIf="currentUser.authorities[0].authority + '' != 'ROLE_STUDENT'"
+                  class="btn btn-danger">Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

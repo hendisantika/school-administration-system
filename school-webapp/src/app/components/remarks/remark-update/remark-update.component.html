@@ -1,0 +1,17 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <h2>Update</h2>
+    <div class="container">
+      <form #form="ngForm" (ngSubmit)="onSubmit()" class="form-remark">
+        <div class="form-group">
+          <label for="text">Text area</label>
+          <textarea [(ngModel)]="response.text" class="form-control" id="text" name="text" required
+                    rows="3">{{remark.text}}</textarea>
+        </div>
+        <button (click)="goBack()" class="btn btn-dark" type="submit">Back</button>
+        <button class="btn btn-success" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
