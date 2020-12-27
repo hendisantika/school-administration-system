@@ -1,0 +1,23 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-title><h3 class="login-h3">{{title}}</h3></mat-card-title>
+    <mat-card-content>
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="!submitted" [formGroup]="form">
+        <p *ngIf="notification" class="notification">{{notification.msgBody}}</p>
+        <table class="table table-bordered non-border-login">
+          <tr>
+            <td><label class="label-login">Username: </label></td>
+            <td><input autofocus class="form-control" formControlName="username" id="username" placeholder="Username"
+                       required type="text"/></td>
+          </tr>
+          <tr>
+            <td><label class="label-login">Password: </label></td>
+            <td><input autofocus class="form-control" formControlName="password" id="password" placeholder="" required
+                       type="password"/></td>
+          </tr>
+        </table>
+        <button [disabled]="!loginForm.form.valid" class="submit-login" type="submit">Login</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

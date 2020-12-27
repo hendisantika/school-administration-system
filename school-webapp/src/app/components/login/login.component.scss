@@ -1,0 +1,62 @@
+$primary: #292b2c;
+$secondary: #fff;
+$border-radius: 1em;
+$box-shadow: 0.4em;
+$border-size: 0.2em;
+$font-size: 1.2em;
+$margin-bottom: 1em;
+$card-with: 25 m;
+
+:host {
+  display: block;
+  color: rgba(0, 0, 0);
+  font-family: Roboto, "Helvetica Neue";
+}
+
+.login-container {
+  width: 100%;
+  text-align: center;
+  padding-top: 10%;
+}
+
+.non-border-login {
+  border-color: transparent !important;
+
+  tr {
+    border-color: transparent !important;
+
+    td {
+      border-color: transparent !important;
+    }
+  }
+}
+
+.login-h3 {
+  margin-top: 0.1em;
+}
+
+.login-card {
+  width: $card-with;
+  margin: 0 auto;
+  display: inline-block;
+  background-color: $secondary;
+  box-shadow: $box-shadow $box-shadow $box-shadow grey;
+  border-radius: $border-radius;
+  border: $border-size solid $primary;
+  animation: fadein 1s;
+}
+
+.label-login {
+  font-size: 1em;
+  display: inline-block;
+  margin-top: 3px;
+}
+
+.submit-login {
+  font-size: $font-size;
+  margin-bottom: $margin-bottom;
+}
+
+.notification {
+  color: red;
+}
