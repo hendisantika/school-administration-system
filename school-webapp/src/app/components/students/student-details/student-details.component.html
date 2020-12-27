@@ -1,0 +1,68 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <h2>Student</h2>
+    </div>
+    <div class="container">
+      <table *ngIf="student" class="table table-bordered">
+        <tbody>
+        <tr>
+          <td>Username</td>
+          <td>{{student.student.username}}</td>
+        </tr>
+        <tr>
+          <td>Fullname</td>
+          <td>{{student.student.fullName}}</td>
+        </tr>
+        <tr>
+          <td>Date of birth</td>
+          <td>{{student.dateOfBirth}}</td>
+        </tr>
+        <tr>
+          <td>Start year</td>
+          <td>{{student.start_year}}</td>
+        </tr>
+        <tr>
+          <td>Address</td>
+          <td>{{student.address}}</td>
+        </tr>
+        <tr>
+          <td>Gender</td>
+          <td>{{student.gender}}</td>
+        </tr>
+        <tr>
+          <td>Education ID</td>
+          <td>{{student.educationId}}</td>
+        </tr>
+        <tr>
+          <td>Health Care ID</td>
+          <td>{{student.healthCareId}}</td>
+        </tr>
+        <tr>
+          <td>Parent 1</td>
+          <td>{{student.parent1Name}}</td>
+        </tr>
+        <tr>
+          <td>Parent 2</td>
+          <td>{{student.parent2Name}}</td>
+        </tr>
+        <tr>
+          <td>Phone number 1</td>
+          <td>{{student.parent1Phone}}</td>
+        </tr>
+        <tr>
+          <td>Phone number 2</td>
+          <td>{{student.parent2Phone}}</td>
+        </tr>
+        <tr>
+          <td>Classroom</td>
+          <td>{{student.classroom.year}}/{{student.classroom.letter}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+

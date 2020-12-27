@@ -1,0 +1,72 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <h2>Update</h2>
+    </div>
+    <div class="container">
+      <button (click)='userUpdate()' class="btn btn-dark" id="account" mat-button mat-ripple>Account settings</button>
+      <form #form="ngForm" (ngSubmit)="submit()" class="form">
+        <div class="form-group">
+          <label for="dateOfBirth">Date of Birth</label>
+          <input [(ngModel)]="response.dateOfBirth" class="form-control" id="dateOfBirth" name="dateOfBirth" required
+                 type="date" value="{{student.dateOfBirth}}">
+        </div>
+        <div *ngIf="userRole() === 'ROLE_ADMIN'" class="form-group">
+          <label for="start_year">Start year</label>
+          <input [(ngModel)]="response.start_year" class="form-control" id="start_year" name="start_year"
+                 placeholder="{{student.start_year}}" required type="number" value="{{student.start_year}}">
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input [(ngModel)]="response.address" class="form-control" id="address" name="address"
+                 placeholder="{{student.address}}" required type="text" value="{{student.address}}">
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select [(ngModel)]="selectedOptionGender" class="form-control form-control-sm" name="gender">
+            <option *ngFor="let gender of genders" [ngValue]="gender">{{gender}}</option>
+          </select>
+        </div>
+        <div *ngIf="userRole() === 'ROLE_ADMIN'" class="form-group">
+          <label for="educationId">Education ID</label>
+          <input [(ngModel)]="response.educationId" class="form-control" id="educationId" name="educationId"
+                 placeholder="{{student.educationId}}" required type="text" value="{{student.educationId}}">
+        </div>
+        <div *ngIf="userRole() === 'ROLE_ADMIN'" class="form-group">
+          <label for="healthCareId">Health Care ID</label>
+          <input [(ngModel)]="response.healthCareId" class="form-control" id="healthCareId" name="healthCareId"
+                 placeholder="{{student.healthCareId}}" required type="text" value="{{student.healthCareId}}">
+        </div>
+        <div class="form-group">
+          <label for="parent1Name">Parent 1</label>
+          <input [(ngModel)]="response.parent1Name" class="form-control" id="parent1Name" name="parent1Name"
+                 placeholder="{{student.parent1Name}}" type="text" value="{{student.parent1Name}}">
+        </div>
+        <div class="form-group">
+          <label for="parent2Name">Parent 2</label>
+          <input [(ngModel)]="response.parent2Name" class="form-control" id="parent2Name" name="parent2Name"
+                 placeholder="{{student.parent2Name}}" type="text" value="{{student.parent2Name}}">
+        </div>
+        <div class="form-group">
+          <label for="parent1Phone">Parent 1 Phone</label>
+          <input [(ngModel)]="response.parent1Phone" class="form-control" id="parent1Phone" name="parent1Phone"
+                 placeholder="{{student.parent1Phone}}" type="text" value="{{student.parent1Phone}}">
+        </div>
+        <div class="form-group">
+          <label for="parent2Phone">Parent 2 Phone</label>
+          <input [(ngModel)]="response.parent2Phone" class="form-control" id="parent2Phone" name="parent2Phone"
+                 placeholder="{{student.parent2Phone}}" type="text" value="{{student.parent2Phone}}">
+        </div>
+        <div *ngIf="userRole() === 'ROLE_ADMIN'" class="form-group">
+          <label for="classroom">Classroom</label>
+          <select [(ngModel)]="selectedOption" class="form-control form-control-sm" name="classroom">
+            <option *ngFor="let classroom of classrooms" [ngValue]="classroom">{{classroom.year}}
+              /{{classroom.letter}}</option>
+          </select>
+        </div>
+        <button (click)="goBack()" class="btn btn-dark" type="submit">Back</button>
+        <button class="btn btn-success" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>

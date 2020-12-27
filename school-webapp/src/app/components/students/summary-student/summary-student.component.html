@@ -1,0 +1,39 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <h2>Summary</h2>
+    </div>
+    <div class="container">
+      <table class="table table-striped table-sm table-bordered">
+        <thead class="thead-dark">
+        <th>Subject</th>
+        <th>Marks</th>
+        <th>Avg.</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let summary of summaries">
+          <td *ngIf="summary.courseName">{{summary.courseName}}</td>
+          <td>
+            <ng-container *ngFor="let exam of summary.exams">
+                      <span *ngIf="(exam.examType == 'TEST')" style="color: black;">
+                        {{exam?.mark}},
+                      </span>
+              <span *ngIf="(exam.examType == 'TOPIC_TEST')" style="color: red;">
+                        {{exam?.mark}},
+                      </span>
+              <span *ngIf="(exam.examType == 'REPETITION')" style="color: blue;">
+                        {{exam?.mark}},
+                      </span>
+              <span *ngIf="(exam.examType == 'HOMEWORK')" style="color: green;">
+                        {{exam?.mark}},
+                      </span>
+            </ng-container>
+          </td>
+          <td>{{ summary.average.toFixed(2)}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
