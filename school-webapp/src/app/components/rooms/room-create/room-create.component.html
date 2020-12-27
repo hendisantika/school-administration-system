@@ -1,0 +1,17 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <h2>Create</h2>
+    <div class="container">
+      <form #form="ngForm" (ngSubmit)="onSubmit()" class="form-room">
+        <div class="form-group">
+          <label for="classroomNumber">Classroom number</label>
+          <input [(ngModel)]="room.classroomNumber" class="form-control" id="classroomNumber" name="classroomNumber"
+                 required type="text">
+        </div>
+        <button (click)="goBack()" class="btn btn-dark" type="submit">Back</button>
+        <button class="btn btn-success" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

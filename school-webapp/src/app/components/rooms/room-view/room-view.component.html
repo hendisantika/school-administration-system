@@ -1,0 +1,32 @@
+<div *ngIf="isDataAvailable">
+  <app-panel-loader></app-panel-loader>
+  <div *ngIf="userRole()" class="container">
+    <div class="container">
+      <div class="container">
+        <h3>Classrooms</h3>
+        <button (click)='createRoom()' class="btn btn-info">Create Classroom</button>
+      </div>
+      <div class="container">
+        <input [(ngModel)]="searchText" autocomplete="on" class="form-control-searchbox" name="search"
+               placeholder="&#171; Search"
+               type="text">
+        <table class="table table-striped table-sm">
+          <thead class="thead-dark">
+          <tr>
+            <th>Room number</th>
+            <th>Function</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let room of rooms | filter:searchText">
+            <td><strong>{{room.classroomNumber}}</strong></td>
+            <td>
+              <button (click)="delete(room.id)" class="btn btn-danger">Delete</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
