@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Message} from 'src/app/model/message';
-import {MessageResponseDTO} from 'src/app/dto/response/MEssageResponseDTO';
+import {MessageResponseDTO} from 'src/app/dto/response/MessageResponseDTO';
 import {MessageService} from 'src/app/service/message.service';
 import {UserService} from 'src/app/service/user.service';
 import {TeacherService} from 'src/app/service/teacher.service';

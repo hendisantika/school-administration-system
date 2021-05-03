@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 import {ConfigService} from './config.service';
-import {MessageResponseDTO} from '../dto/response/MEssageResponseDTO';
+import {MessageResponseDTO} from '../dto/response/MessageResponseDTO';
 
 @Injectable({
   providedIn: 'root'

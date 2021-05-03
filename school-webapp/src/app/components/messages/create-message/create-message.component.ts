@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MessageResponseDTO} from 'src/app/dto/response/MEssageResponseDTO';
+import {MessageResponseDTO} from 'src/app/dto/response/MessageResponseDTO';
 import {MessageService} from 'src/app/service/message.service';
 import {UserService} from 'src/app/service/user.service';
 import {Router} from '@angular/router';
